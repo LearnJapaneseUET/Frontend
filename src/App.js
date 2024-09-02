@@ -2,6 +2,7 @@ import './App.css';
 import Header from './components/Header'
 import Lists from './page/Lists'
 import Sidebar from './components/Sidebar';
+import HomePage from './page/HomePage';
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,9 +19,9 @@ function App() {
           <div className="mb-3">
             <Header/>
           </div>
-          <div className="px-10">
+          <div className="mx-10">
             <Routes>
-              <Route path="/" element={<Lists />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/list/:id" element={<ListPage/>} />
             </Routes>
           </div>

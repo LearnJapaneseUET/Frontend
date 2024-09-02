@@ -1,6 +1,6 @@
 import React from 'react'
 import {BsSearch} from "react-icons/bs";
-import avatar from '../image/ava.png';
+import avatar from '../Assets/ava.png';
 import { IoNotifications } from "react-icons/io5";
 
 const Header = () => {
@@ -14,9 +14,9 @@ const Header = () => {
           <div className='text-2xl place-self-center'>
               <IoNotifications/>
           </div>
-          <div className='flex items-center border-t-2 border-r-2 border-b-2 border-grey-900 rounded-full shadow-md	cursor-pointer'>
-              <img className="rounded-full w-12 h-12 border-2 border-green-900" src={avatar} alt='avatar' />
-              <span className="ml-2 mr-6">User Name</span>
+          <div className='flex items-center border-r-2 border-b-2 border-grey-900 rounded-2xl shadow-md	cursor-pointer'>
+              <img className="rounded-full w-10 h-10 border-2 border-green-900 my-2 mx-2" src={avatar} alt='avatar' />
+              <span className="mr-6">User Name</span>
           </div>
         </div>
     </div>
