@@ -9,7 +9,7 @@ const HomePage = () => {
       <div>
         <AnalysicsOverview/>
       </div>
-      <div className='flex flex-row gap-48 pt-6'>
+      <div className='flex flex-row gap-16 pt-6'>
         <div>
           <CurrentLessons/>
         </div>

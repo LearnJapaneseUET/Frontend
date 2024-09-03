@@ -2,7 +2,9 @@ import React from 'react'
 
 const CurrentActivity = () => {
   return (
-    <div>CurrentActivity</div>
+    <div>
+      <h1 className='text-xl font-semibold'>Current Activity</h1>
+    </div>
   )
 }
 
