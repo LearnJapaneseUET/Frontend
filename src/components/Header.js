@@ -2,16 +2,12 @@ import React from 'react'
 import { FaSearch } from "react-icons/fa";
 import avatar from '../Assets/ava.png';
 import { FaRegBell } from "react-icons/fa";
+import SearchField from './SearchField';
 
 const Header = () => {
   return (
     <div className='flex items-center my-6'>
-      <div className='flex-1 flex justify-center'>
-        <div className={`flex items-center justify-center border border-2 px-4 py-2 w-5/12 rounded-3xl`}>
-          <input type="search" placeholder='Search for query' className={`text-base bg-transparent w-full text-white focus:outline-none`} />
-          <FaSearch className={`text-gray-500 text-lg cursor-pointer`} />
-        </div>
-      </div>
+      <SearchField/>
       <div className='flex items-center w-[30%]'>
         <div className='text-2xl'>
           <FaRegBell className={`text-gray-500 cursor-pointer`}/>

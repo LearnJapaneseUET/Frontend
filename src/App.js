@@ -27,7 +27,9 @@ function App() {
             <div className="flex-1 mx-14">
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/list/all" element={<Lists />} />
                 <Route path="/list/:id" element={<ListPage />} />
+                {/* <Route path="/search/:searchTerm" element={<WordDetail />} /> */}
               </Routes>
             </div>
 

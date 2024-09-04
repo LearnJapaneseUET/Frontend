@@ -7,7 +7,6 @@ import Styding from "../Assets/sidebar_decor.png"
 
 const Sidebar = () => {
     const [open, setOpend] = useState(true);
-    const [submenuOpen, setSubmenuOpen] = useState(false)
     const Menus = [
         { title: "Dashboard" },
         { title: "Dictionary", icon: <AiOutlineFileText /> },
@@ -30,25 +29,12 @@ const Sidebar = () => {
                 <ul className='pt-2'>
                     {Menus.map((menu, index) => (
                         <div key={index}>
-                            <li className={`text-dark-purple text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
+                            <li className={`text-blue-950 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
                                 <span className='text-2xl block float-left'>
                                     {menu.icon ? menu.icon : <RiDashboardFill/>}
                                 </span>
-                                <span className={`text-base font-normal flex-1 duration-200 ${!open && "hidden"}`}>{menu.title}</span>
-                                {menu.submenu && open && (
-                                    <BsChevronDown className={`${submenuOpen && "rotate-180"}`} onClick={() => setSubmenuOpen(!submenuOpen)}/>
-                                )}
+                                <span className={`text-slate-500 text-base font-normal flex-1 duration-200 ${!open && "hidden"}`}>{menu.title}</span>
                             </li>
-                            
-                            {menu.submenu && submenuOpen && open && (
-                                <ul>
-                                    {menu.submenuItems.map((submenuItem, index) => (
-                                        <li key={index} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-5 hover:bg-light-white rounded-md`}>
-                                            {submenuItem.title}
-                                        </li>
-                                    ))} 
-                                </ul>
-                            )}
                         </div>  
                     ))}
                 </ul>
