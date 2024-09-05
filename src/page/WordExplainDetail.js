@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import { AiOutlineSound } from "react-icons/ai";
 import textToSpeech from '../components/TextToSpeech';
 import { FaRegComments } from "react-icons/fa6";
@@ -30,98 +31,6 @@ const WordExplainDetail = () => {
             try {
                 let response = await fetch(`/api/dictionary/search/${searchTerm}`);
                 let data = await response.json();
-                // let data = {
-                //     "meaning": {
-                //         "short_mean": "sự tu sửa; sự đính chính; sự chỉnh sửa",
-                //         "mobileId": 144730,
-                //         "word": "修正",
-                //         "phonetic": "しゅうせい",
-                //         "means": [
-                //             {
-                //                 "examples": "null",
-                //                 "kind": "n, vs",
-                //                 "mean": "sự tu sửa; sự đính chính; sự chỉnh sửa"
-                //             }
-                //         ]
-                //     },
-                //     "example": {
-                //         "0": {
-                //             "transcription": "しゅうせいきにゅう",
-                //             "content": "修正記入",
-                //             "mean": "viết phần đính chính"
-                //         },
-                //         "1": {
-                //             "transcription": "〜にしゅうせいをくわえることをいっさいこばむ",
-                //             "content": "〜に修正を加えることを一切拒む",
-                //             "mean": "dứt khoát từ chối việc đính chính"
-                //         },
-                //         "2": {
-                //             "transcription": "けつぎあんをしゅうせいする",
-                //             "content": "決議案を修正する",
-                //             "mean": "Sửa đổi dự thảo nghị quyết"
-                //         },
-                //         "3": {
-                //             "transcription": "かれはじせつをしゅうせいした。",
-                //             "content": "彼は自説を修正した。",
-                //             "mean": "Anh ấy đã sửa lại ý kiến ​​của mình."
-                //         },
-                //         "4": {
-                //             "transcription": "つぎのようにしゅうせいしてください。",
-                //             "content": "次のように修正してください。",
-                //             "mean": "Vui lòng sửa như sau."
-                //         }
-                //     },
-                //     "comment": {
-                //         "0": {
-                //             "mean": "無修正 Kiểu dạng phim không che. :))"
-                //         },
-                //         "1": {
-                //             "mean": "修正 sửa lại cho đúng ( Vì nó sai nên phải sửa)\n調整 điều chỉnh lại (ví dụ như kế hoạch thay đổi thì điều chỉnh lại, chứ ko phải nó sai nên phải sửa)."
-                //         },
-                //         "2": {
-                //             "mean": "住所が間違っているので、修正してください"
-                //         },
-                //         "3": {
-                //             "mean": "Fix (bug)"
-                //         },
-                //         "4": {
-                //             "mean": "Chỉnh sửa văn bản,nội dung"
-                //         },
-                //         "5": {
-                //             "mean": "sự tu sửa, nâng cấp lại máy móc, mạng, hệ thống"
-                //         },
-                //         "6": {
-                //             "mean": "切り替え装置の組図と部品図を作成する時、お客様からの指摘が多くて、何度も図面を修正しなければなりません。図面を何度も修正するのは時間がかかるし、私にとって本当に嫌でした。しかし、お客様の指摘のおかげで、仕事をしている時、気が付かない事を学びました。安全カバーが必要とか、製作が困難とか、ＬＭガイドの抜け止めとか。。。そういう事から経験を重ねて次に同じミスを繰り返さないようにしていきたいと思います。"
-                //         },
-                //         "7": {
-                //             "mean": "写真を修正した。chỉnh sửa ảnh"
-                //         },
-                //         "8": {
-                //             "mean": "エブーイ動画を見るのは趣味だから、よく無修正の女優を見てる"
-                //         },
-                //         "9": {
-                //             "mean": "来週中にバグ修正が完了する見通しです"
-                //         },
-                //         "10": {
-                //             "mean": "Sự chỉnh sửa"
-                //         },
-                //         "11": {
-                //             "mean": "điều chỉnh nội dung trên văn bản, giấy tờ"
-                //         },
-                //         "12": {
-                //             "mean": "図面修正をお願いします Vui lòng chỉnh sửa bản vẽ"
-                //         },
-                //         "13": {
-                //             "mean": "cty tôi chư hán này có nghĩa là sửa 傷が悪いから、修正してください"
-                //         },
-                //         "14": {
-                //             "mean": "khắc phục"
-                //         },
-                //         "15": {
-                //             "mean": "EN: adjust"
-                //         }
-                //     }
-                // }
                 setMeaning(data.meaning);
                 setExample(data.example);
                 setComment(data.comment);
@@ -133,13 +42,22 @@ const WordExplainDetail = () => {
         getData();
     }, [searchTerm]); // Add searchTerm as a dependency
 
-    console.log(meanings, examples, comments);
+    const kanjiCharacters = searchTerm.split('').map((char, index) => ({
+        char,
+        index,
+    }));
 
     return (
-        <div className='border-4 border-[#f4f4f4] h-full w-full rounded-xl p-4 custom-scroll-bar-2 overflow-y-auto'>
+        <div className='border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
             <div>
                 <h1 className='text-5xl font-semibold text-dark-green mb-6'>
-                    {searchTerm} {/* Use searchTerm instead of searchWord */}
+                    {kanjiCharacters.map((kanji, idx) => (
+                        <Link to={`/search/${kanji.char}`}>
+                            <span key={idx} className='cursor-pointer hover:text-blue-500'>
+                                {kanji.char}
+                            </span>
+                        </Link>
+                    ))}
                 </h1>
                 <p className='font-medium text-red-orange mb-2'>
                     {meanings.phonetic}

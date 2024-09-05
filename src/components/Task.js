@@ -5,13 +5,14 @@ import { FaTrash, FaEdit } from 'react-icons/fa';
 import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
 
-
 const Task = () => {
     const [tasks, setTasks] = useState([
         { content: "Học 30 từ kanji", is_done: true },
         { content: "Xem 1 video tiếng nhật", is_done: true },
         { content: "Nghe choukai 15p", is_done: false },
         { content: "Làm bài tập sách mimi", is_done: false },
+        { content: "Ôn bài cũ", is_done: true },
+        { content: "Ôn bài cũ", is_done: true },
         { content: "Ôn bài cũ", is_done: true },
         // Add more tasks as needed
     ]);
@@ -55,7 +56,7 @@ const Task = () => {
     };
 
     return (
-        <div className='flex mb-10 mt-3 max-w-[25%] max-h-[88%]'>
+        <div className='flex mb-10 mt-3 max-w-[20svw]'>
             <div className='bg-[#FF9EAA] pl-5 py-5 w-68 rounded-tl-3xl rounded-bl-3xl rounded-tr-3xl border-b-[12px] border-r-8 border-red-orange'>
                 <div className='flex justify-between items-center'>
                     <div className='inline-flex items-center gap-2'>
@@ -81,7 +82,7 @@ const Task = () => {
                         Add
                     </button>
                 </div>
-                <div className='max-h-[30rem] custom-scroll-bar-2 overflow-y-auto mt-6 pr-2'>
+                <div className='max-h-[55svh] overflow-y-auto mt-6 pr-2'>
                     {tasks.map((task, index) => (
                         <div key={index} className='mb-8 mx-2 flex flex-row items-center rounded-lg p-2 bg-[#F8E8EE]'>
                             <span 
