@@ -29,7 +29,7 @@ const AnalysicsOverview = () => {
               <p>
                 Số từ vựng đã học:
               </p>
-              <p>
+              <p className='font-semibold'>
                 160 từ
               </p>
             </div>
@@ -40,7 +40,7 @@ const AnalysicsOverview = () => {
               <p>
                 Số video đã xem:
               </p>
-              <p>
+              <p className='font-semibold'>
                 10 videos
               </p>
             </div>

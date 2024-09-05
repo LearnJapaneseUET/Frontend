@@ -29,11 +29,11 @@ const Sidebar = () => {
                 <ul className='pt-2'>
                     {Menus.map((menu, index) => (
                         <div key={index}>
-                            <li className={`text-blue-950 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
+                            <li className={`text-blue-90 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
                                 <span className='text-2xl block float-left'>
                                     {menu.icon ? menu.icon : <RiDashboardFill/>}
                                 </span>
-                                <span className={`text-slate-500 text-base font-normal flex-1 duration-200 ${!open && "hidden"}`}>{menu.title}</span>
+                                <span className={`text-slate-500 text-base font-normal flex-1 duration-100 hover:font-semibold hover:uppercase ${!open && "hidden"}`}>{menu.title}</span>
                             </li>
                         </div>  
                     ))}

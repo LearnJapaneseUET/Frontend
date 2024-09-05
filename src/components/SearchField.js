@@ -88,7 +88,7 @@ const SearchField = (props) => {
             >
                 <div
                     ref={suggestMenuRef}
-                    className="text-white bg-gray-600 max-h-[370px] custom-scroll-bar-2 overflow-y-auto rounded-md"
+                    className="text-white bg-gray-600 max-h-96 custom-scroll-bar-2 overflow-y-auto rounded-md"
                 >
                     {suggestions.map((word, index) => (
                         <Link to={`/search/${word.kanji}`}>

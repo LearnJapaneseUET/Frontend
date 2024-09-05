@@ -10,6 +10,7 @@ import {
   Route
 } from "react-router-dom";
 import ListPage from './page/ListPage';
+import WordExplainDetail from './page/WordExplainDetail'
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/list/all" element={<Lists />} />
                 <Route path="/list/:id" element={<ListPage />} />
-                {/* <Route path="/search/:searchTerm" element={<WordDetail />} /> */}
+                <Route path="/search/:searchTerm" element={<WordExplainDetail />} />
               </Routes>
             </div>
 
