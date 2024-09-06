@@ -39,7 +39,7 @@ const SearchField = (props) => {
     };
 
     const fetchWordMeaning = async (word) => {
-        const response = await fetch(`/api/dictionary/search/${word}`);
+        const response = await fetch(`/api/dictionary/search/word/${word}`);
         const data = await response.json();
         setMeaning(data);
         console.log(data);
@@ -91,7 +91,7 @@ const SearchField = (props) => {
                     className="text-white bg-gray-600 max-h-96 custom-scroll-bar-2 overflow-y-auto rounded-md"
                 >
                     {suggestions.map((word, index) => (
-                        <Link to={`/search/${word.kanji}`}>
+                        <Link to={`/search/word/${word.kanji}`}>
                             <div
                                 className="border-b-gray-500 px-4 py-3 border-b border-solid cursor-pointer"
                                 key={index}

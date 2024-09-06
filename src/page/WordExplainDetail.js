@@ -29,7 +29,7 @@ const WordExplainDetail = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                let response = await fetch(`/api/dictionary/search/${searchTerm}`);
+                let response = await fetch(`/api/dictionary/search/word/${searchTerm}`);
                 let data = await response.json();
                 setMeaning(data.meaning);
                 setExample(data.example);
@@ -38,7 +38,6 @@ const WordExplainDetail = () => {
                 console.error('Error fetching data:', error);
             }
         };
-
         getData();
     }, [searchTerm]); // Add searchTerm as a dependency
 
@@ -52,7 +51,7 @@ const WordExplainDetail = () => {
             <div>
                 <h1 className='text-5xl font-semibold text-dark-green mb-6'>
                     {kanjiCharacters.map((kanji, idx) => (
-                        <Link to={`/search/${kanji.char}`}>
+                        <Link to={`/search/kanji/${kanji.char}`}>
                             <span key={idx} className='cursor-pointer hover:text-blue-500'>
                                 {kanji.char}
                             </span>

@@ -24,7 +24,7 @@ const ListPage = ({match}) => {
                 <div className="list_detail">
                     {words.map((word, index) => (
                         <div key={index}>
-                            <WordItem key={index} word={word} />
+                            <WordItem word={word} />
                         </div>
                     ))}
                 </div>
