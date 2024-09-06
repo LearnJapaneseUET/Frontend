@@ -4,16 +4,17 @@ import { BsArrowLeftShort, BsChevronDown, BsFillImageFill  } from "react-icons/b
 import { GiJapaneseBridge } from "react-icons/gi";
 import { RiDashboardFill } from "react-icons/ri";
 import Styding from "../Assets/sidebar_decor.png"
+import {Link} from 'react-router-dom'
 
 const Sidebar = () => {
     const [open, setOpend] = useState(true);
     const Menus = [
-        { title: "Dashboard" },
-        { title: "Dictionary", icon: <AiOutlineFileText /> },
-        { title: "Flashcard", icon: <BsFillImageFill /> },
-        { title: "Sub Video", icon: <AiOutlineBarChart /> },
-        { title: "Kaiwa", icon: <AiOutlineMail /> },
-        { title: "Setting", spacing: true, icon: <AiOutlineSetting/>},
+        { title: "Dashboard", link: null },
+        // { title: "Dictionary", link: "/",icon: <AiOutlineFileText /> },
+        { title: "Flashcard", link: "/list/all", icon: <BsFillImageFill /> },
+        { title: "Sub Video", link: null, icon: <AiOutlineBarChart /> },
+        { title: "Kaiwa", link: null, icon: <AiOutlineMail /> },
+        { title: "Setting", link: null,spacing: true, icon: <AiOutlineSetting/>},
       ];
 
     return (
@@ -29,12 +30,14 @@ const Sidebar = () => {
                 <ul className='pt-2'>
                     {Menus.map((menu, index) => (
                         <div key={index}>
-                            <li className={`text-blue-90 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
-                                <span className='text-2xl block float-left'>
-                                    {menu.icon ? menu.icon : <RiDashboardFill/>}
-                                </span>
-                                <span className={`text-slate-500 text-base font-normal flex-1 duration-100 hover:font-semibold hover:uppercase ${!open && "hidden"}`}>{menu.title}</span>
-                            </li>
+                            <Link to={menu.link || "/"}>
+                                <li className={`text-blue-90 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>
+                                    <span className='text-2xl block float-left'>
+                                        {menu.icon ? menu.icon : <RiDashboardFill/>}
+                                    </span>
+                                    <span className={`text-slate-500 text-base font-normal flex-1 duration-100 hover:font-semibold hover:uppercase ${!open && "hidden"}`}>{menu.title}</span>
+                                </li>
+                            </Link>
                         </div>  
                     ))}
                 </ul>
