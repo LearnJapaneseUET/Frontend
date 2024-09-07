@@ -7,6 +7,7 @@ import { CiStar } from "react-icons/ci";
 import { useParams } from 'react-router-dom';
 import { TbPinFilled } from "react-icons/tb";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import ExampleImg from '../components/ExampleImg';
 
 
 const WordExplainDetail = () => {
@@ -41,7 +42,7 @@ const WordExplainDetail = () => {
         getData();
     }, [searchTerm]); // Add searchTerm as a dependency
 
-    const kanjiCharacters = searchTerm.split('').map((char, index) => ({
+    const kanjiCharacters = searchTerm?.split('').map((char, index) => ({
         char,
         index,
     }));
@@ -72,7 +73,7 @@ const WordExplainDetail = () => {
                     {meanings?.means?.length > 0 ? (
                         meanings.means.map((mean, index) => (
                             <span key={index}>{
-                                mean.kind.split(', ').map((kindItem, i, arr) => (
+                                mean?.kind?.split(', ').map((kindItem, i, arr) => (
                                     <span key={i} className='mx-1'>
                                         {kindMapping[kindItem] || kindItem}
                                         {i < arr.length - 1 && ','}    
@@ -138,6 +139,10 @@ const WordExplainDetail = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className='example_img'>
+                <ExampleImg word={searchTerm}/>
             </div>
 
             <div className='word_comment'>
