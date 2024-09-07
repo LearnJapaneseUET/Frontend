@@ -78,7 +78,7 @@ const ExampleComponent = () => {
                             {meanings?.level?.[0]}
                         </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex">
                         <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] m-1 font-medium content-center"> Nghĩa: </div>
                         <div className="w-[80%]">
                             {detailParts.map((part, index) => (
@@ -90,7 +90,7 @@ const ExampleComponent = () => {
                     </div>
                 </div>
                 <div
-                    className={cn("kanji-text flex justify-center items-center", 'w-[30%] ml-auto')}
+                    className={cn("kanji-text flex", 'w-[30%] ml-auto')}
                     dangerouslySetInnerHTML={svgData ? { __html: svgData } : undefined}
                 />
             </div>
