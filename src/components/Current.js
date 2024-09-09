@@ -14,7 +14,7 @@ const Current = () => {
             <div className='container flex justify-around items-center flex-wrap p-5 bg-[#FFD966] rounded-2xl'>
                 {Lessons.map((lesson, index) => (
                     <div key = {index} className='card relative shadow-card rounded-lg w-3/12 h-64 group cursor-pointer'>
-                        <div className='box absolute border inset-3.5 p-2 shadow-box rounded-lg flex justify-center items-center transition duration-500 group-hover:-translate-y-[20px] group-hover:shadow-box-hover group-hover:bg-[#FFACAC]'>
+                        <div className='box absolute border-[3px] border-slate-100 inset-3.5 p-2 shadow-box rounded-lg flex justify-center items-center transition duration-500 group-hover:-translate-y-[20px] group-hover:shadow-box-hover group-hover:bg-[#FFACAC]'>
                             <div className='content p-2 text-center'>
                                 <h2 className='absolute top-[-5px] right-2 text-7xl text-[rgba(0,0,0,0.05)] font-bold pointer-events-none group-hover:text-slate-[150] transition duration-500'>{lesson.number}</h2>
                                 <h3 className='relative z-10 text-xl font-bold text-lg text-[#5D5D5D] group-hover:text-white'>{lesson.name}</h3>
