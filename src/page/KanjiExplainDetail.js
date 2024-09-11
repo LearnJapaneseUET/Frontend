@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import WordItem from '../components/WordItem'
+import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import { FaRegComments } from "react-icons/fa6";
 
 
 function cn(...inputs) {
@@ -49,37 +51,37 @@ const ExampleComponent = () => {
             <div className="flex mb-4">
                 <div className="ml-8">
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] m-1 font-medium"> Hán tự: </div>
+                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium"> Hán tự: </div>
                         <div>
                             {meanings?.kanji} - {meanings?.mean}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] m-1 font-medium content-center"> Kunyomi: </div>
+                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Kunyomi: </div>
                         <div>
                             {meanings?.kun}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] m-1 font-medium content-center"> Onyomi: </div>
+                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Onyomi: </div>
                         <div>
                             {meanings?.on}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] m-1 font-medium"> Số nét: </div>
+                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> Số nét: </div>
                         <div>
                             {meanings?.stroke_count}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] m-1 font-medium"> JLPT: </div>
+                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> JLPT: </div>
                         <div>
                             {meanings?.level?.[0]}
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] m-1 font-medium content-center"> Nghĩa: </div>
+                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Nghĩa: </div>
                         <div className="w-[80%]">
                             {detailParts.map((part, index) => (
                                 <div key={index}>
@@ -107,7 +109,7 @@ const ExampleComponent = () => {
                     <p></p>
                 )}
             </div>
-            <div>
+            <div className="kun_on_reading_guide">
                 <h1 className="font-bold text-lg my-2">
                     Ví dụ phân loại theo cách đọc
                 </h1>
@@ -151,6 +153,34 @@ const ExampleComponent = () => {
                         ) : (
                             <p></p>
                         )}
+                </div>
+            </div>
+
+            <div className='word_comment'>
+                <FaRegComments className='text-2xl mr-2 text-red-orange'/>
+                <div>
+                    {comments && Object.keys(comments).length > 0 ? (
+                    Object.keys(comments).map((key, idx) => (
+                        <div key={idx} className="ml-8 my-3 pb-2 border-b-2">                                    
+                            <p>{comments[key].mean}</p>
+                            <p className='flex justify-between'>
+                                <div className='inline-flex items-center mt-1'>
+                                    <span className='mr-3 inline-flex items-center'>
+                                        <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key].like}
+                                    </span>
+                                    <span className='inline-flex items-center'>
+                                        <AiOutlineDislike className='mr-1 text-red-500'/> {comments[key].dislike}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p>{comments[key].username}</p>
+                                </div>
+                            </p>
+                        </div>
+                    ))
+                    ) : (
+                        <p></p>
+                    )}
                 </div>
             </div>
         </div>

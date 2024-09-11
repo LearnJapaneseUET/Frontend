@@ -5,12 +5,10 @@ import { FaSearch } from "react-icons/fa";
 import {Link} from 'react-router-dom'
 
 const SearchField = (props) => {
-    const { myRef, result, setResult } = props;
-
     const [suggestions, setSuggestion] = useState([]);
     const [searchWord, setSearchWord] = useState("");
     const [isFocus, setIsFocus] = useState(false);
-    const [meaning, setMeaning] = useState([]);
+    // const [meaning, setMeaning] = useState([]);
     const suggestMenuRef = useRef(null);
     const debouncedValue = useDebounce(searchWord, 500); // Debounced value
 
@@ -38,17 +36,17 @@ const SearchField = (props) => {
         console.log(data);
     };
 
-    const fetchWordMeaning = async (word) => {
-        const response = await fetch(`/api/dictionary/search/word/${word}`);
-        const data = await response.json();
-        setMeaning(data);
-        console.log(data);
-    };
+    // const fetchWordMeaning = async (word) => {
+    //     const response = await fetch(`/api/dictionary/search/word/${word}`);
+    //     const data = await response.json();
+    //     setMeaning(data);
+    //     console.log(data);
+    // };
 
     const fetchWordData = async (word) => {
         setSearchWord(word);
         setIsFocus(false);
-        fetchWordMeaning(word);
+        //fetchWordMeaning(word);
     };
 
     useOnClickOutside(suggestMenuRef, () => {

@@ -1,5 +1,4 @@
 import React from 'react'
-import { FaSearch } from "react-icons/fa";
 import avatar from '../Assets/ava.png';
 import { FaRegBell } from "react-icons/fa";
 import SearchField from './SearchField';

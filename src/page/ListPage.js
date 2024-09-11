@@ -52,7 +52,7 @@ const ListPage = ({match}) => {
                         ))}
                     </div>
                 )} */}
-                {isLearning ? <AnimationCard words={words}/> : <ListView words={words}/>}
+                {isLearning ? <AnimationCard words={words}/> : <ListView words={words} fetchWord={getWord}/>}
             </div>
         </div>
     )

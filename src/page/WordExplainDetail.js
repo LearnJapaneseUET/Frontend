@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { TbPinFilled } from "react-icons/tb";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import ExampleImg from '../components/ExampleImg';
+import FlashCardListBox from '../components/FlashCardListBox';
 
 
 const WordExplainDetail = () => {
@@ -48,7 +49,8 @@ const WordExplainDetail = () => {
     }));
 
     return (
-        <div className='border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
+        <div className='relative border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
+            <FlashCardListBox />
             <div>
                 <h1 className='text-5xl font-semibold text-dark-green mb-6'>
                     {kanjiCharacters.map((kanji, idx) => (

@@ -1,6 +1,6 @@
 import {React, useState} from 'react'
-import { AiOutlineSetting, AiOutlineFileText, AiOutlineBarChart, AiOutlineMail } from 'react-icons/ai';
-import { BsArrowLeftShort, BsChevronDown, BsFillImageFill  } from "react-icons/bs";
+import { AiOutlineSetting, AiOutlineBarChart, AiOutlineMail } from 'react-icons/ai';
+import { BsArrowLeftShort, BsFillImageFill  } from "react-icons/bs";
 import { GiJapaneseBridge } from "react-icons/gi";
 import { RiDashboardFill } from "react-icons/ri";
 import Styding from "../Assets/sidebar_decor.png"

@@ -39,7 +39,9 @@ function SamplePrevArrow(props) {
 }
 
 const AnimationCard = ({words}) => {
-    const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentSlide, setCurrentSlide] = useState(false);
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [isChange, setIsChange] = useState(false);
     const sliderRef = useRef(null);
 
     // const items = [
@@ -59,7 +61,13 @@ const AnimationCard = ({words}) => {
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow isVisible={currentSlide < words.length - 1} />,
         prevArrow: <SamplePrevArrow isVisible={currentSlide > 0} />,
-        afterChange: index => setCurrentSlide(index)
+        afterChange: index => {
+            setCurrentSlide(index);
+        },
+        beforeChange: () => {
+            setIsFlipped(false); // Reset isFlipped to false before changing slide
+            setIsChange(true);
+        },
     };
 
     useEffect(() => {
@@ -68,6 +76,8 @@ const AnimationCard = ({words}) => {
                 sliderRef.current.slickNext();
             } else if (event.key === 'ArrowLeft') {
                 sliderRef.current.slickPrev();
+            } else if (event.code === 'Space') {
+                setIsFlipped((prev) => !prev); // Flip the card on Space key press
             }
         };
 
@@ -78,8 +88,6 @@ const AnimationCard = ({words}) => {
         };
     }, []);
 
-    const [isFlipped, setIsFlipped] = useState(false);
-
     return (
         <div className='w-[50svw] m-auto'>
             <div className='p-20'>
@@ -87,8 +95,11 @@ const AnimationCard = ({words}) => {
                     {words.map((word, index) => (
                         <div key={index} className="w-full h-full !flex justify-center items-center">
                             <div
-                            className={`relative w-96 h-96 transition-transform duration-1000 transform-style-preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
-                            onClick={() => setIsFlipped(!isFlipped)}
+                            className={`relative w-96 h-96 ${!isChange ? 'transition-transform duration-1000' : ''} transform-style-preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
+                            onClick={() => {
+                                setIsFlipped(!isFlipped)
+                                setIsChange(false)
+                            }}
                             >
                             {/* Front Side */}
                             <div className="absolute w-full h-full bg-gradient-to-br from-yellow-500 to-pink-500 flex items-center justify-center rounded-lg shadow-md backface-hidden">
