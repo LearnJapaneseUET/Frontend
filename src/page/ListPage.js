@@ -6,7 +6,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
 
 
 const ListPage = ({match}) => {
-    const { id } = useParams();
+    const { listId } = useParams();
     const [words, setWord] = useState(null)
     const [listName, setName] = useState(null)
     const [isLearning, setIsLearning] = useState(false)
@@ -14,10 +14,10 @@ const ListPage = ({match}) => {
     useEffect(() => {
         getWord();
         // eslint-disable-next-line
-    }, [id]);
+    }, [listId]);
 
     const getWord = async () => {
-        let response = await fetch(`/api/flashcard/${id}/`);
+        let response = await fetch(`/api/flashcard/${listId}/`);
         let data = await response.json();
         setWord(data.words);
         setName(data.name)

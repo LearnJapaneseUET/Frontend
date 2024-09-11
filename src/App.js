@@ -30,7 +30,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/list/all" element={<Lists />} />
-                <Route path="/list/:id" element={<ListPage />} />
+                <Route path="/list/:listId" element={<ListPage />} />
                 <Route path="/search/word/:searchTerm" element={<WordExplainDetail />} />
                 <Route path="/search/kanji/:searchTerm" element={<KanjiExplainDetail />} />
               </Routes>

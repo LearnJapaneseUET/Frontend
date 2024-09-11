@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import WordItem from '../components/WordItem'
+import WordItem from '../components/WordItem';
+import CreateWord from '../components/CreateWord'; // Import CreateWord
 import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
 
@@ -9,7 +10,6 @@ function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                 break;
@@ -25,14 +25,16 @@ const ListView = ({ words, fetchWord }) => {
     const [editMeaning, setEditMeaning] = useState('');
     const [editFurigana, setEditFurigana] = useState('');
     const [editHanviet, setEditHanviet] = useState('');
+    const [showCreateForm, setShowCreateForm] = useState(false); // Trạng thái để hiển thị form CreateWord
     const csrftoken = getCookie('csrftoken');
+    console.log(csrftoken)
 
     const handleEdit = (index) => {
         setEditIndex(index);
-        setEditMeaning(words[index].m);  // Giả sử bạn muốn chỉnh sửa thuộc tính `m`
-        setEditFurigana(words[index].p); // Giả sử bạn muốn chỉnh sửa thuộc tính `h`
-        setEditHanviet(words[index].h);  // Giả sử bạn muốn chỉnh sửa thuộc tính `p`
-        setWordId(words[index].id); // Thiết lập ID từ để sử dụng khi lưu
+        setEditMeaning(words[index].m);
+        setEditFurigana(words[index].p);
+        setEditHanviet(words[index].h);
+        setWordId(words[index].id);
     };
 
     const updatedWord = async () => {
@@ -51,7 +53,6 @@ const ListView = ({ words, fetchWord }) => {
             });
     
             if (response.ok) {
-                // Nếu yêu cầu PUT thành công, làm mới danh sách từ
                 await fetchWord();
             } else {
                 console.error('Failed to update word:', response.statusText);
@@ -72,7 +73,6 @@ const ListView = ({ words, fetchWord }) => {
             });
     
             if (response.ok) {
-                // Nếu yêu cầu DELETE thành công, làm mới danh sách từ
                 fetchWord();
             } else {
                 console.error('Failed to delete word:', response.statusText);
@@ -80,22 +80,38 @@ const ListView = ({ words, fetchWord }) => {
         } catch (error) {
             console.error('Error:', error);
         }
-    }
+    };
 
     const saveEdit = () => {
         if (editMeaning.trim() || editFurigana.trim() || editHanviet.trim()) {
-            updatedWord()
-            fetchWord(); // Làm mới danh sách từ
+            updatedWord();
+            fetchWord();
         }
         setEditIndex(null);
         setEditMeaning('');
         setEditFurigana('');
         setEditHanviet('');
-        setWordId(null); // Xóa ID sau khi lưu
+        setWordId(null);
+    };
+
+    const toggleCreateForm = () => {
+        setShowCreateForm(!showCreateForm);
     };
 
     return (
         <div className='mt-6'>
+            {/* Nút Add */}
+            <button
+                onClick={toggleCreateForm}
+                className='bg-green-500 text-white px-4 py-2 rounded mb-4'
+            >
+                {showCreateForm ? "Hide Form" : "Add Word"}
+            </button>
+
+            {/* Hiển thị form CreateWord nếu showCreateForm là true */}
+            {showCreateForm && <CreateWord fetchWord={fetchWord} getCookie={getCookie} />}
+
+            {/* Danh sách từ */}
             {words && words.length > 0 && (
                 <div className="list_detail">
                     {words.map((word, index) => (
