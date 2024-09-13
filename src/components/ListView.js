@@ -61,32 +61,29 @@ const ListView = ({ words, listId, fetchWord }) => {
                     {words.map((word, index) => (
                         <div key={index} className='flex items-center'>
                             {editIndex === index ? (
-                                <div className='flex w-full items-center'>
-                                    <h3 className='w-[15svh] mr-4 text-[#7695FF]'>{word?.w}</h3>
-                                    <input 
-                                        type='text' 
-                                        value={editFurigana} 
-                                        onChange={(e) => setEditFurigana(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30svh] ml-2'
-                                    />
-                                    <input 
-                                        type='text' 
-                                        value={editHanviet} 
-                                        onChange={(e) => setEditHanviet(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30svh] ml-2'
-                                    />
-                                    <input 
-                                        type='text' 
-                                        value={editMeaning} 
-                                        onChange={(e) => setEditMeaning(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30svh]'
-                                    />
-                                    <button 
-                                        onClick={saveEdit} 
-                                        className='ml-3 bg-blue-500 text-white px-2 py-1 rounded'
-                                    >
-                                        Save
-                                    </button>
+                                <div className='flex w-full items-center px-2'>
+                                    <div className='flex w-full items-center'>
+                                        <h3 className='w-[15svh] text-[#7695FF] pl-1'>{word?.w}</h3>
+                                        <input 
+                                            type='text' 
+                                            value={editFurigana} 
+                                            onChange={(e) => setEditFurigana(e.target.value)} 
+                                            className='border px-2 py-1 rounded w-[16svh] ml-2'
+                                        />
+                                        <p className='w-[15svh] mr-4 text-[#F4538A]'>{word?.h}</p>
+                                        <input 
+                                            type='text' 
+                                            value={editMeaning} 
+                                            onChange={(e) => setEditMeaning(e.target.value)} 
+                                            className='border px-2 py-1 rounded w-[50svh]'
+                                        />
+                                        <button 
+                                            onClick={saveEdit} 
+                                            className='ml-3 bg-blue-500 text-white px-2 py-1 rounded'
+                                        >
+                                            Save
+                                        </button>
+                                    </div>
                                 </div>
                             ) : (
                                 <div className='flex w-full items-center rounded-xl hover:bg-gray-200 hover:font-semibold px-2'>

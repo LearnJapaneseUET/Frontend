@@ -82,7 +82,7 @@ const Lists = () => {
                             />
                         )}
                         <Link to={`/list/${list.id}`}>
-                            <h3 className={`pl-3 hover:bg-gray-200 hover:font-semibold rounded-xl ${isDeleting ? 'flex-grow' : ''}`}>
+                            <h3 className={`pl-3 py-1 w-[98svh] hover:bg-gray-200 hover:font-semibold rounded-xl ${isDeleting ? 'flex-grow' : ''}`}>
                                 {list.name}
                             </h3>
                         </Link>
