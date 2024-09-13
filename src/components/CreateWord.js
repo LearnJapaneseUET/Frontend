@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
+import postNewWordData from "../services/postNewWordData"
 
-const CreateWord = ({getCookie, fetchWord}) => {
+const CreateWord = ({fetchWord}) => {
     const [newWord, setNewWord] = useState('');
     const [Furigana, setFurigana] = useState('');
     const [Meaning, setMeaning] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { listId } = useParams();
     console.log(`listId: ${listId}`)
-    const csrftoken = getCookie('csrftoken')
 
     const createWord = async () => {
         let missingFields = [];
@@ -22,43 +22,18 @@ const CreateWord = ({getCookie, fetchWord}) => {
             return;
         }
 
-        try {
-            const response = await fetch('/api/flashcard/word/create/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                body: JSON.stringify({
-                    w: newWord,
-                    p: Furigana,
-                    m: Meaning,
-                    listId: listId
-                })
-            });
+        const result = await postNewWordData({ newWord, furigana: Furigana, meaning: Meaning, listId });
 
-            if (response.ok) {
-                alert('Từ mới đã được thêm thành công!');
-                // Reset các giá trị sau khi thêm thành công
-                setNewWord('');
-                setFurigana('');
-                setMeaning('');
-                setErrorMessage(''); // Xóa lỗi sau khi thành công
-                await fetchWord();
-            } else {
-                // Xử lý thông báo lỗi từ API
-                const errorData = await response.json();
-                if (errorData.error && errorData.error.includes('Từ mới đã tồn tại')) {
-                    setErrorMessage(`Từ "${newWord}" đã tồn tại trong danh sách.`);
-                    setNewWord('');
-                    setFurigana('');
-                    setMeaning('');
-                } else {
-                    setErrorMessage('Có lỗi xảy ra khi thêm từ mới.');
-                }
-            }
-        } catch (error) {
-            setErrorMessage('Có lỗi kết nối với máy chủ.');
+        if (result.success) {
+            alert('Từ mới đã được thêm thành công!');
+            // Reset các giá trị sau khi thêm thành công
+            setNewWord('');
+            setFurigana('');
+            setMeaning('');
+            setErrorMessage(''); // Xóa lỗi sau khi thành công
+            await fetchWord();
+        } else {
+            setErrorMessage(result.message);
         }
     }
 

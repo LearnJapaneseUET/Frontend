@@ -3,30 +3,16 @@ import WordItem from '../components/WordItem';
 import CreateWord from '../components/CreateWord'; // Import CreateWord
 import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
+import updateWord from '../services/updateWord';
+import deleteWord from '../services/deleteWord';
 
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-const ListView = ({ words, fetchWord }) => {
+const ListView = ({ words, listId, fetchWord }) => {
     const [editIndex, setEditIndex] = useState(null);
     const [wordId, setWordId] = useState(null);
     const [editMeaning, setEditMeaning] = useState('');
     const [editFurigana, setEditFurigana] = useState('');
     const [editHanviet, setEditHanviet] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false); // Trạng thái để hiển thị form CreateWord
-    const csrftoken = getCookie('csrftoken');
 
     const handleEdit = (index) => {
         setEditIndex(index);
@@ -36,61 +22,25 @@ const ListView = ({ words, fetchWord }) => {
         setWordId(words[index].id);
     };
 
-    const updatedWord = async () => {
-        try {
-            const response = await fetch(`/api/flashcard/word/${wordId}/update/`, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                body: JSON.stringify({
-                    meaning: editMeaning,
-                    furigana: editFurigana,
-                    //h: editHanviet
-                })
-            });
-    
-            if (response.ok) {
-                await fetchWord();
-            } else {
-                console.error('Failed to update word:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-    
-    const deletedWord = async (id) => {
-        try {
-            const response = await fetch(`/api/flashcard/word/${id}/delete/`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                }
-            });
-    
-            if (response.ok) {
-                fetchWord();
-            } else {
-                console.error('Failed to delete word:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    const saveEdit = () => {
+    const saveEdit = async () => {
         if (editMeaning.trim() || editFurigana.trim() || editHanviet.trim()) {
-            updatedWord();
-            fetchWord();
+            const success = await updateWord(wordId, editMeaning, editFurigana);
+            if (success) {
+                await fetchWord();
+            }
         }
         setEditIndex(null);
         setEditMeaning('');
         setEditFurigana('');
         setEditHanviet('');
         setWordId(null);
+    };
+
+    const handleDelete = async (wordId) => {
+        const success = await deleteWord(wordId, listId);
+        if (success) {
+            await fetchWord();
+        }
     };
 
     const toggleCreateForm = () => {
@@ -108,7 +58,7 @@ const ListView = ({ words, fetchWord }) => {
             </button>
 
             {/* Hiển thị form CreateWord nếu showCreateForm là true */}
-            {showCreateForm && <CreateWord fetchWord={fetchWord} getCookie={getCookie} />}
+            {showCreateForm && <CreateWord fetchWord={fetchWord} />}
 
             {/* Danh sách từ */}
             {words && words.length > 0 && (
@@ -153,7 +103,7 @@ const ListView = ({ words, fetchWord }) => {
                                         className='ml-2 text-yellow-600 cursor-pointer text-2xl flex-shrink-0'
                                     />
                                     <TbHttpDelete 
-                                        onClick={() => deletedWord(word.id)} 
+                                        onClick={() => handleDelete(word.id)} 
                                         className='ml-2 text-red-500 cursor-pointer text-2xl'
                                     />
                                 </div>
