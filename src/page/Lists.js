@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlusCircle } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
 import postNewList from '../services/postNewList';
+import deleteList from '../services/deleteList';
 
 const Lists = () => {
     const [lists, setList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [newListName, setNewListName] = useState('');
     const [error, setError] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [selectedLists, setSelectedLists] = useState([]);
 
     useEffect(() => {
         getList();
@@ -43,22 +47,70 @@ const Lists = () => {
         }
     };
 
+    const toggleSelectList = (id) => {
+        setSelectedLists((prevSelected) =>
+            prevSelected.includes(id)
+                ? prevSelected.filter((listId) => listId !== id)
+                : [...prevSelected, id]
+        );
+    };
+
+    const handleDeleteLists = async () => {
+        try {
+            for (let id of selectedLists) {
+                await deleteList(id)
+            }
+            await getList(); // Cập nhật danh sách sau khi xóa
+            setSelectedLists([]);
+            setIsDeleting(false);
+        } catch (err) {
+            setError('Có lỗi xảy ra khi xóa danh sách.');
+        }
+    };
+
     return (
         <div className='relative'>
             <div className="lists">
-                {lists.map((list, index) => (
-                    <div key={index}>
+                {lists.map((list) => (
+                    <div key={list.id} className='m-1 w-[100svh] flex items-center'>
+                        {isDeleting && (
+                            <input
+                                type='checkbox'
+                                checked={selectedLists.includes(list.id)}
+                                onChange={() => toggleSelectList(list.id)}
+                                className='mr-2'
+                            />
+                        )}
                         <Link to={`/list/${list.id}`}>
-                            <h3>{list.name}</h3>
+                            <h3 className={`pl-3 hover:bg-gray-200 hover:font-semibold rounded-xl ${isDeleting ? 'flex-grow' : ''}`}>
+                                {list.name}
+                            </h3>
                         </Link>
                     </div>
                 ))}
             </div>
-            <FiPlusCircle
-                className='absolute top-3 right-3 text-4xl text-green-500 cursor-pointer'
-                onClick={() => setModalOpen(true)}
-            />
-            
+            <div className='absolute top-3 right-3'>
+                <FiPlusCircle
+                    className='text-4xl text-green-500 cursor-pointer'
+                    onClick={() => setModalOpen(true)}
+                />
+                <MdDelete
+                    className='mt-4 text-4xl text-red-500 cursor-pointer'
+                    onClick={() => setIsDeleting(!isDeleting)}
+                />
+            </div>
+
+            {isDeleting && (
+                <div className='absolute bottom-3 right-3'>
+                    <button
+                        onClick={handleDeleteLists}
+                        className='bg-red-500 text-white p-2 rounded hover:bg-red-600'
+                    >
+                        Xóa danh sách đã chọn
+                    </button>
+                </div>
+            )}
+
             {modalOpen && (
                 <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
                     <div className='bg-white p-6 rounded-lg shadow-lg w-80'> {/* Fixed width */}

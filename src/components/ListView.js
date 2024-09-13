@@ -89,13 +89,13 @@ const ListView = ({ words, listId, fetchWord }) => {
                                     </button>
                                 </div>
                             ) : (
-                                <div className='flex w-full items-center'>
+                                <div className='flex w-full items-center rounded-xl hover:bg-gray-200 hover:font-semibold px-2'>
                                     <div className='flex-grow'>
-                                        <WordItem word={word} className='flex flex-row p-1 rounded-xl hover:bg-gray-200 text-justify'/>
+                                        <WordItem word={word} className='flex flex-row p-1 text-justify'/>
                                     </div>
                                     <CiEdit 
                                         onClick={() => handleEdit(index)} 
-                                        className='ml-2 text-yellow-600 cursor-pointer text-2xl flex-shrink-0'
+                                        className='ml-2 text-yellow-600 cursor-pointer text-2xl'
                                     />
                                     <TbHttpDelete 
                                         onClick={() => handleDelete(word.id)} 
