@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 
 const CreateWord = ({getCookie, fetchWord}) => {
@@ -70,21 +70,21 @@ const CreateWord = ({getCookie, fetchWord}) => {
                 value={newWord} 
                 onChange={(e) => setNewWord(e.target.value)} 
                 placeholder="Từ mới"
-                className='border px-2 py-1 rounded w-[30%] mb-2'
+                className='border px-2 py-1 rounded w-[30svh] mb-2'
             />
             <input 
                 type='text' 
                 value={Furigana} 
                 onChange={(e) => setFurigana(e.target.value)} 
                 placeholder="Furigana"
-                className='border px-2 py-1 rounded w-[30%] mb-2'
+                className='border px-2 py-1 rounded w-[30svh] mb-2'
             />
             <input 
                 type='text' 
                 value={Meaning} 
                 onChange={(e) => setMeaning(e.target.value)} 
                 placeholder="Meaning"
-                className='border px-2 py-1 rounded w-[30%] mb-2'
+                className='border px-2 py-1 rounded w-[30svh] mb-2'
             />
             <button 
                 onClick={createWord} 

@@ -2,25 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import WordItem from '../components/WordItem'
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { FaRegComments } from "react-icons/fa6";
-
+import FlashCardListBox from '../components/FlashCardListBox';
+import ExampleDisplay from '../components/ExampleDisplay'
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-const ExampleComponent = () => {
+const KanjiExplainDetail = () => {
     const { searchTerm } = useParams();
 
-    console.log(searchTerm);
-
     const [meanings, setMeaning] = useState([]);
-    const [examples, setExample] = useState([]);
+    //const [examples, setExample] = useState([]);
     const [comments, setComment] = useState([]);
     const [svgData, setSvgData] = useState(null); // Sử dụng state để lưu dữ liệu SVG
     const [detailParts, setDetailParts] = useState([]);
+    const [selectedList, setSelectedList] = useState(null); // Thêm state để lưu giá trị của list đã chọn
 
     useEffect(() => {
         const getData = async () => {
@@ -29,7 +28,7 @@ const ExampleComponent = () => {
             let data = await response.json();
 
             setMeaning(data.meaning);
-            setExample(data.example);
+            //setExample(data.example);
             setComment(data.comment);
             setSvgData(data.kanjiArt.replace(/ns[0-9]+:/g, '')
                                     .replace(/xmlns(:[a-z0-9]+)?="[^"]+"/g, ''));
@@ -44,45 +43,49 @@ const ExampleComponent = () => {
         getData();
     }, [searchTerm]); // Chạy lại khi searchTerm thay đổi
 
-    console.log(examples);
+    // Hàm callback để nhận giá trị từ FlashCardListBox
+    const handleListChange = (selectedOption) => {
+        setSelectedList(selectedOption);
+        console.log("Received list from FlashCardListBox:", selectedOption);
+    };
 
     return (
         <div className='border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl px-6 py-4 custom-scroll-bar-2 overflow-y-auto'>
             <div className="flex mb-4">
-                <div className="ml-8">
+                <div className="ml-8 w-[70svh]">
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium"> Hán tự: </div>
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium"> Hán tự: </div>
                         <div>
                             {meanings?.kanji} - {meanings?.mean}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Kunyomi: </div>
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-lg bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Kunyomi: </div>
                         <div>
                             {meanings?.kun}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Onyomi: </div>
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Onyomi: </div>
                         <div>
                             {meanings?.on}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> Số nét: </div>
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> Số nét: </div>
                         <div>
                             {meanings?.stroke_count}
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> JLPT: </div>
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium"> JLPT: </div>
                         <div>
                             {meanings?.level?.[0]}
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="w-[18%] p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Nghĩa: </div>
-                        <div className="w-[80%]">
+                        <div className="w-[10svh] flex-shrink-0 p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Nghĩa: </div>
+                        <div className="flex-grow">
                             {detailParts.map((part, index) => (
                                 <div key={index}>
                                     {part}
@@ -91,70 +94,13 @@ const ExampleComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div
-                    className={cn("kanji-text flex", 'w-[30%] ml-auto')}
-                    dangerouslySetInnerHTML={svgData ? { __html: svgData } : undefined}
-                />
-            </div>
-            <div>
-                <p className="font-bold text-lg">
-                    Ví dụ
-                </p>
-                {meanings.examples && meanings.examples.length > 0 ? (meanings.examples.map((example, index) => (
-                    <div key={index}>
-                        <WordItem word={example} className={'flex flex-row p-1 rounded-xl hover:bg-gray-200 text-justify'}/>
-                    </div>
-                ))
-                ) : (
-                    <p></p>
-                )}
-            </div>
-            <div className="kun_on_reading_guide">
-                <h1 className="font-bold text-lg my-2">
-                    Ví dụ phân loại theo cách đọc
-                </h1>
-                <div>
-                    <p className="font-semibold text-lg w-auto bg-[#C8FFD4] p-2 rounded-xl">
-                        Kunyomi
-                    </p>
-                        {meanings.example_kun && Object.keys(meanings.example_kun).length > 0 ? (Object.keys(meanings.example_kun).map((key) => (
-                            <div key={key}>
-                                <h2 className="inline-block font-semibold text-lg w-auto text-red-500 pt-3 pb-1">{key}</h2>
-                                <ul>
-                                    {meanings.example_kun[key].map((item, index) => (
-                                        <div key={index}>
-                                            <WordItem word={item} className={'flex flex-row p-1 rounded-xl hover:bg-gray-200 text-justify'}/>
-                                        </div>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))
-                        ) : (
-                            <p></p>
-                    )}
-                </div>
-
-                <div>
-                    <p className="font-semibold text-lg w-auto bg-[#C8FFD4] p-2 rounded-xl mt-6">
-                        Onyomi
-                    </p>
-                        {meanings.example_on && Object.keys(meanings.example_on).length > 0 ? (Object.keys(meanings.example_on).map((key) => (
-                            <div key={key}>
-                                <h2 className="inline-block font-semibold text-lg w-auto text-red-500 pt-3 pb-1">{key}</h2>
-                                <ul>
-                                    {meanings.example_on[key].map((item, index) => (
-                                        <div key={index}>
-                                            <WordItem word={item} className={'flex flex-row p-1 rounded-xl hover:bg-gray-200 text-justify'}/>
-                                        </div>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))
-                        ) : (
-                            <p></p>
-                        )}
+                <div className={cn("kanji-text flex flex-col", 'w-[22svh] max-h-20 ml-auto')}>
+                    <FlashCardListBox onSelectListChange={handleListChange} />
+                    <div dangerouslySetInnerHTML={svgData ? { __html: svgData } : undefined} />
                 </div>
             </div>
+            
+            <ExampleDisplay meanings={meanings} listId={selectedList}/>
 
             <div className='word_comment'>
                 <FaRegComments className='text-2xl mr-2 text-red-orange'/>
@@ -187,4 +133,4 @@ const ExampleComponent = () => {
     );
 };
 
-export default ExampleComponent;
+export default KanjiExplainDetail;

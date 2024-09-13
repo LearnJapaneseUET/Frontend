@@ -33,7 +33,6 @@ const SearchField = (props) => {
         const response = await fetch(`/api/dictionary/suggestion/${debouncedValue}`);
         const data = await response.json();
         setSuggestion(data);
-        console.log(data);
     };
 
     // const fetchWordMeaning = async (word) => {

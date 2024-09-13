@@ -48,9 +48,15 @@ const WordExplainDetail = () => {
         index,
     }));
 
+    // Đảm bảo `handleListChange` là một hàm
+    const handleListChange = (selectedOption) => {
+        console.log("Selected Option:", selectedOption);
+        // Xử lý giá trị được chọn
+    };
+
     return (
         <div className='relative border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
-            <FlashCardListBox />
+            <FlashCardListBox onSelectListChange={handleListChange} />
             <div>
                 <h1 className='text-5xl font-semibold text-dark-green mb-6'>
                     {kanjiCharacters.map((kanji, idx) => (

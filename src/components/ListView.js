@@ -27,7 +27,6 @@ const ListView = ({ words, fetchWord }) => {
     const [editHanviet, setEditHanviet] = useState('');
     const [showCreateForm, setShowCreateForm] = useState(false); // Trạng thái để hiển thị form CreateWord
     const csrftoken = getCookie('csrftoken');
-    console.log(csrftoken)
 
     const handleEdit = (index) => {
         setEditIndex(index);
@@ -118,24 +117,24 @@ const ListView = ({ words, fetchWord }) => {
                         <div key={index} className='flex items-center'>
                             {editIndex === index ? (
                                 <div className='flex w-full items-center'>
-                                    <h3 className='w-[15%] mr-4 text-[#7695FF]'>{word?.w}</h3>
+                                    <h3 className='w-[15svh] mr-4 text-[#7695FF]'>{word?.w}</h3>
                                     <input 
                                         type='text' 
                                         value={editFurigana} 
                                         onChange={(e) => setEditFurigana(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30%] ml-2'
+                                        className='border px-2 py-1 rounded w-[30svh] ml-2'
                                     />
                                     <input 
                                         type='text' 
                                         value={editHanviet} 
                                         onChange={(e) => setEditHanviet(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30%] ml-2'
+                                        className='border px-2 py-1 rounded w-[30svh] ml-2'
                                     />
                                     <input 
                                         type='text' 
                                         value={editMeaning} 
                                         onChange={(e) => setEditMeaning(e.target.value)} 
-                                        className='border px-2 py-1 rounded w-[30%]'
+                                        className='border px-2 py-1 rounded w-[30svh]'
                                     />
                                     <button 
                                         onClick={saveEdit} 

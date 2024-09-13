@@ -1,7 +1,7 @@
 import React from 'react'
 import AnalysicsOverview from '../components/AnalysicsOverview'
-import CurrentLessons from '../components/CurrentLessons'
-import CurrentActivity from '../components/CurrentActivity'
+// import CurrentLessons from '../components/CurrentLessons'
+// import CurrentActivity from '../components/CurrentActivity'
 import Current from '../components/Current'
 
 const HomePage = () => {

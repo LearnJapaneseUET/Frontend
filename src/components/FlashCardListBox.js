@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 
-const FlashCardListBox = () => {
+const FlashCardListBox = ({ onSelectListChange }) => {
     const [lists, setList] = useState([]);
-    const [selectedList, setSelectedList] = useState(''); // Trạng thái để lưu danh sách được chọn
+    const [selectedList, setSelectedList] = useState(null); // Trạng thái để lưu danh sách được chọn
 
     useEffect(() => {
         getList();
@@ -12,31 +13,33 @@ const FlashCardListBox = () => {
         try {
             let response = await fetch('/api/flashcard/all/');
             let data = await response.json();
-            setList(data);
+            // Convert lists to options suitable for react-select
+            const options = data.map((list) => ({
+                value: list.id,
+                label: list.name,
+            }));
+            setList(options);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    const handleSelectChange = (event) => {
-        setSelectedList(event.target.value); // Cập nhật trạng thái khi chọn một mục
-        console.log("Selected list:", event.target.value); // Hiển thị danh sách được chọn trong console
+    const handleSelectChange = (selectedOption) => {
+        setSelectedList(selectedOption); // Cập nhật trạng thái khi chọn một mục
+        console.log("Selected list ID:", selectedOption.value); // Hiển thị ID của danh sách được chọn
+        onSelectListChange(selectedOption.value); // Chỉ truyền value (ID) cho hàm callback
     };
 
     return (
-        <div className='absolute top-3 right-3'>
-            <select 
-                className='border rounded-lg p-2 bg-white text-black' 
+        <div className='ml-auto w-[18svh] mb-6'>
+            <Select 
+                className='border rounded-lg bg-white text-black'
                 value={selectedList} 
                 onChange={handleSelectChange}
-            >
-                <option value="" disabled>Choose a flashcard list</option>
-                {lists.map((list, index) => (
-                    <option key={index} value={list.name}>
-                        {list.name}
-                    </option>
-                ))}
-            </select>
+                options={lists} // Hiển thị danh sách các tùy chọn
+                isSearchable // Cho phép tìm kiếm
+                placeholder="Choose a list"
+            />
         </div>
     );
 };

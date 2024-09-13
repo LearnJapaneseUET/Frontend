@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { GoTasklist } from 'react-icons/go';
 import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
-import { FaTrash, FaEdit } from 'react-icons/fa';
 import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
 
