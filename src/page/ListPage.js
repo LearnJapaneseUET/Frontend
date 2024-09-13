@@ -27,7 +27,7 @@ const ListPage = ({match}) => {
     return (
         <div>
             <div className='flex justify-between mx-10'>
-                <h1 className='mb-3 font-semibold'>{listName}</h1>
+                <h1 className='mb-3 font-semibold text-2xl'>{listName}</h1>
                 <div className='bg-dark-green text-white font-semibold text-xl cursor-pointer p-2 rounded-xl' 
                       onClick={() => setIsLearning(!isLearning)}>
                     {isLearning ? 

@@ -3,6 +3,7 @@ import WordItem from '../components/WordItem';
 import CreateWord from '../components/CreateWord'; // Import CreateWord
 import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
+import { FiPlusCircle } from "react-icons/fi";
 import updateWord from '../services/updateWord';
 import deleteWord from '../services/deleteWord';
 
@@ -48,17 +49,11 @@ const ListView = ({ words, listId, fetchWord }) => {
     };
 
     return (
-        <div className='mt-6'>
-            {/* Nút Add */}
-            <button
-                onClick={toggleCreateForm}
-                className='bg-green-500 text-white px-4 py-2 rounded mb-4'
-            >
-                {showCreateForm ? "Hide Form" : "Add Word"}
-            </button>
+        <div className='h-[75svh]'>
+            <FiPlusCircle className='mb-4 text-4xl text-green-500 cursor-pointer' onClick={toggleCreateForm}/>
 
             {/* Hiển thị form CreateWord nếu showCreateForm là true */}
-            {showCreateForm && <CreateWord fetchWord={fetchWord} />}
+            {showCreateForm && <CreateWord fetchWord={fetchWord} setShowCreateForm={setShowCreateForm}/>}
 
             {/* Danh sách từ */}
             {words && words.length > 0 && (

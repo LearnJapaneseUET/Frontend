@@ -1,22 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { FiPlusCircle } from "react-icons/fi";
+import postNewList from '../services/postNewList';
 
 const Lists = () => {
     const [lists, setList] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [newListName, setNewListName] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         getList();
     }, []);
 
     const getList = async () => {
-        let response = await fetch('/api/flashcard/all/');
-        let data = await response.json();
-        setList(data);
+        try {
+            let response = await fetch('/api/flashcard/all/');
+            if (!response.ok) {
+                throw new Error('Lỗi khi lấy danh sách');
+            }
+            let data = await response.json();
+            setList(data);
+        } catch (err) {
+            setError('Có lỗi xảy ra khi tải danh sách.');
+        }
     };
 
-    console.log(lists)
+    const handleCreateList = async () => {
+        setError(''); // Reset lỗi trước khi gửi yêu cầu
+        if (!newListName.trim()) {
+            setError('Tên danh sách không được để trống.');
+            return;
+        }
+
+        const result = await postNewList(newListName);
+        if (result.success) {
+            setNewListName(''); // Xóa tên danh sách sau khi tạo
+            await getList(); // Cập nhật danh sách sau khi tạo mới
+            setModalOpen(false); // Đóng modal
+        } else {
+            setError(result.message || 'Có lỗi xảy ra khi tạo danh sách.');
+        }
+    };
+
     return (
-        <div>
+        <div className='relative'>
             <div className="lists">
                 {lists.map((list, index) => (
                     <div key={index}>
@@ -26,6 +54,38 @@ const Lists = () => {
                     </div>
                 ))}
             </div>
+            <FiPlusCircle
+                className='absolute top-3 right-3 text-4xl text-green-500 cursor-pointer'
+                onClick={() => setModalOpen(true)}
+            />
+            
+            {modalOpen && (
+                <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
+                    <div className='bg-white p-6 rounded-lg shadow-lg w-80'> {/* Fixed width */}
+                        <h2 className='text-xl mb-4'>Tạo danh sách mới</h2>
+                        <input
+                            type='text'
+                            value={newListName}
+                            onChange={(e) => setNewListName(e.target.value)}
+                            placeholder='Nhập tên danh sách'
+                            className='border border-gray-300 p-2 w-full mb-4'
+                        />
+                        {error && <p className='text-red-500 mb-4'>{error}</p>}
+                        <button
+                            onClick={handleCreateList}
+                            className='bg-green-500 text-white p-2 rounded hover:bg-green-600'
+                        >
+                            Tạo danh sách
+                        </button>
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            className='ml-4 bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400'
+                        >
+                            Hủy
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
