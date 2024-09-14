@@ -13,7 +13,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import fetchWordList from '../services/fetchWordList';
 import fetchWordData from '../services/fetchWordData';
 import isWordInList from '../utils/checkWordInList';
-import postNewWordData from '../services/postNewWordData'
+import addWord from '../services/addWord'
 
 
 const WordExplainDetail = () => {
@@ -64,16 +64,12 @@ const WordExplainDetail = () => {
 
     const handleSaveWord = async () => {
         if (selectedList && searchTerm) {
-            const allMeans = meanings.means.map(mean => mean.mean).join(', ');
-            const writing = searchTerm;
-            const furigana = meanings.phonetic;
-            const meaning = allMeans;
-            console.log("hhihi", writing, furigana, meaning, selectedList);
-            const result = await postNewWordData(writing, furigana, meaning, selectedList);
+            const result = await addWord(searchTerm, selectedList);
+
             if (result.success) {
                 // Update wordList or show a success message
                 console.log('Word added successfully');
-                
+                setIsInList(true)                
             } else {
                 // Show an error message
                 console.error('Failed to add word:', result.message);
@@ -99,7 +95,7 @@ const WordExplainDetail = () => {
                         ))}
                     </h1>
                     {!isInList ? 
-                        <FiPlusCircle className='ml-3 text-3xl text-green-500 cursor-pointer' onClick={handleSaveWord}/> 
+                        <FiPlusCircle className='ml-3 text-3xl text-green-500 cursor-pointer' onClick={() => handleSaveWord()}/> 
                     : 
                         ""
                     }

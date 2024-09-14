@@ -3,6 +3,7 @@ import WordItem from '../components/WordItem'
 import { TiPlus } from "react-icons/ti";
 import fetchWordList from '../services/fetchWordList';
 import isWordInList from '../utils/checkWordInList';
+import addWord from '../services/addWord'
 
 const ExampleDisplay = ({meanings, listId}) => {
     const [wordList, setWordList] = useState([])
@@ -18,6 +19,22 @@ const ExampleDisplay = ({meanings, listId}) => {
         setWordList(data.words);
     };
 
+    const handleSaveWord = async (word) => {
+        console.log("Saving word:", word, "to listId:", listId);
+        try {
+            const result = await addWord(word.w, listId);
+            if (result.success) {
+                await getWord();
+                console.log('Word added successfully');
+            } else {
+                console.error('Failed to add word:', result.message);
+            }
+        } catch (error) {
+            console.error('Error saving word:', error);
+        }
+    };
+    
+
     return (
         <div>
             <div>
@@ -27,8 +44,8 @@ const ExampleDisplay = ({meanings, listId}) => {
                 {meanings.examples && meanings.examples.length > 0 ? (meanings.examples.map((example, index) => (
                     <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                         <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                        {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
-                            <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
+                        {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                            <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' onClick={() => handleSaveWord(example)}/>
                         )}
                     </div>
                 ))
@@ -51,8 +68,8 @@ const ExampleDisplay = ({meanings, listId}) => {
                                     {meanings.example_kun[key].map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                                            {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
-                                                <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
+                                            {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                                                <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' onClick={() => handleSaveWord(example)}/>
                                             )}
                                         </div>
                                     ))}
@@ -75,8 +92,8 @@ const ExampleDisplay = ({meanings, listId}) => {
                                     {meanings.example_on[key].map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                                            {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
-                                                <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
+                                            {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                                                <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' onClick={() => handleSaveWord(example)}/>
                                             )}
                                         </div>
                                     ))}
