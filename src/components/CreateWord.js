@@ -22,7 +22,7 @@ const CreateWord = ({ fetchWord, setShowCreateForm }) => {
             return;
         }
 
-        const result = await postNewWordData({ newWord, furigana: Furigana, meaning: Meaning, listId });
+        const result = await postNewWordData(newWord, Furigana, Meaning, listId);
 
         if (result.success) {
             alert('Từ mới đã được thêm thành công!');

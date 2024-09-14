@@ -13,6 +13,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import fetchWordList from '../services/fetchWordList';
 import fetchWordData from '../services/fetchWordData';
 import isWordInList from '../utils/checkWordInList';
+import postNewWordData from '../services/postNewWordData'
 
 
 const WordExplainDetail = () => {
@@ -22,7 +23,8 @@ const WordExplainDetail = () => {
     const [meanings, setMeaning] = useState([]);
     const [examples, setExample] = useState([]);
     const [comments, setComment] = useState([]); 
-    const [wordList, setWordList] = useState([]);
+    const [selectedList, setSelectedList] = useState(null);
+    const [isInList, setIsInList] = useState(true);
 
     const kindMapping = {
         n: "danh từ",
@@ -56,9 +58,29 @@ const WordExplainDetail = () => {
     const handleListChange = async (selectedOption) => {
         console.log("Selected Option:", selectedOption);
         const data = await fetchWordList(selectedOption); // Fetch danh sách từ của list được chọn
-        setWordList(data.words);
-        console.log("wordList:", wordList)
+        setSelectedList(selectedOption);
+        setIsInList(isWordInList(searchTerm.trim(), data.words));
     };
+
+    const handleSaveWord = async () => {
+        if (selectedList && searchTerm) {
+            const allMeans = meanings.means.map(mean => mean.mean).join(', ');
+            const writing = searchTerm;
+            const furigana = meanings.phonetic;
+            const meaning = allMeans;
+            console.log("hhihi", writing, furigana, meaning, selectedList);
+            const result = await postNewWordData(writing, furigana, meaning, selectedList);
+            if (result.success) {
+                // Update wordList or show a success message
+                console.log('Word added successfully');
+                
+            } else {
+                // Show an error message
+                console.error('Failed to add word:', result.message);
+            }
+        }
+    };
+    
 
     return (
         <div className='relative border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
@@ -76,7 +98,11 @@ const WordExplainDetail = () => {
                             </Link>
                         ))}
                     </h1>
-                    {!isWordInList(searchTerm.trim(), wordList) ? <FiPlusCircle className='ml-3 text-3xl text-green-500 cursor-pointer'/> : ""}
+                    {!isInList ? 
+                        <FiPlusCircle className='ml-3 text-3xl text-green-500 cursor-pointer' onClick={handleSaveWord}/> 
+                    : 
+                        ""
+                    }
                 </div>
                 <p className='font-medium text-red-orange mb-2 mt-6'>
                     {meanings.phonetic}

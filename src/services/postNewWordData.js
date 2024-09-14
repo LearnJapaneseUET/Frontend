@@ -1,6 +1,6 @@
 import getCookie from '../utils/getCookie';
 
-const postNewWordData = async ({ newWord, furigana, meaning, listId }) => {
+const postNewWordData = async (newWord, furigana, meaning, listId) => {
     const csrftoken = getCookie('csrftoken');
 
     try {
