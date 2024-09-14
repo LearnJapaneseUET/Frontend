@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import WordItem from '../components/WordItem'
 import { TiPlus } from "react-icons/ti";
+import fetchWordList from '../services/fetchWordList';
+import isWordInList from '../utils/checkWordInList';
 
 const ExampleDisplay = ({meanings, listId}) => {
     const [wordList, setWordList] = useState([])
@@ -12,15 +14,8 @@ const ExampleDisplay = ({meanings, listId}) => {
     }, [listId]);
 
     const getWord = async () => {
-        let response = await fetch(`/api/flashcard/${listId}/`);
-        let data = await response.json();
+        const data = await fetchWordList(listId);
         setWordList(data.words);
-    };
-
-    // Hàm kiểm tra xem từ đã có trong danh sách words hay chưa
-    const isWordInList = (word) => {
-        console.log("check:", word, wordList)
-        return wordList.some((w) => w.w === word.w);
     };
 
     return (
@@ -32,7 +27,7 @@ const ExampleDisplay = ({meanings, listId}) => {
                 {meanings.examples && meanings.examples.length > 0 ? (meanings.examples.map((example, index) => (
                     <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                         <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                        {!isWordInList(example) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                        {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
                             <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
                         )}
                     </div>
@@ -56,7 +51,7 @@ const ExampleDisplay = ({meanings, listId}) => {
                                     {meanings.example_kun[key].map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                                            {!isWordInList(example) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                                            {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
                                                 <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
                                             )}
                                         </div>
@@ -80,7 +75,7 @@ const ExampleDisplay = ({meanings, listId}) => {
                                     {meanings.example_on[key].map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
-                                            {!isWordInList(example) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
+                                            {!isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
                                                 <TiPlus className='flex-shrink-0 text-dark-green text-2xl cursor-pointer' />
                                             )}
                                         </div>

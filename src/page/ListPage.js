@@ -5,6 +5,7 @@ import AnimationCard from '../components/AnimationCard';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import updateListName from '../services/updateListName';
+import fetchWordList from '../services/fetchWordList';
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -20,8 +21,7 @@ const ListPage = () => {
     }, [listId]);
 
     const getWord = async () => {
-        let response = await fetch(`/api/flashcard/${listId}/`);
-        let data = await response.json();
+        const data = await fetchWordList(listId)
         setWord(data.words);
         setName(data.name);
         setNewNameList(data.name); // Set giá trị mới cho input khi bắt đầu edit

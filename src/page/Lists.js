@@ -4,6 +4,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import postNewList from '../services/postNewList';
 import deleteList from '../services/deleteList';
+import fetchList from '../services/fetchList';
 
 const Lists = () => {
     const [lists, setList] = useState([]);
@@ -19,11 +20,7 @@ const Lists = () => {
 
     const getList = async () => {
         try {
-            let response = await fetch('/api/flashcard/all/');
-            if (!response.ok) {
-                throw new Error('Lỗi khi lấy danh sách');
-            }
-            let data = await response.json();
+            const data = await fetchList();
             setList(data);
         } catch (err) {
             setError('Có lỗi xảy ra khi tải danh sách.');

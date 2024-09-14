@@ -6,6 +6,7 @@ import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { FaRegComments } from "react-icons/fa6";
 import FlashCardListBox from '../components/FlashCardListBox';
 import ExampleDisplay from '../components/ExampleDisplay'
+import fetchKanjiData from '../services/fetchKanjiData'
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -24,8 +25,7 @@ const KanjiExplainDetail = () => {
     useEffect(() => {
         const getData = async () => {
         try {
-            let response = await fetch(`/api/dictionary/search/kanji/${searchTerm}`);
-            let data = await response.json();
+            const data = await fetchKanjiData(searchTerm);
 
             setMeaning(data.meaning);
             //setExample(data.example);

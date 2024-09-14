@@ -3,6 +3,7 @@ import { useDebounce } from "../hooks/useDebounce";
 import { useOnClickOutside } from "usehooks-ts";
 import { FaSearch } from "react-icons/fa";
 import {Link} from 'react-router-dom'
+import fetchWordSuggestion from '../services/fetchWordSuggestion';
 
 const SearchField = (props) => {
     const [suggestions, setSuggestion] = useState([]);
@@ -18,7 +19,7 @@ const SearchField = (props) => {
           return;
         }
     
-        fetchWordSuggestion();
+        getWordSuggestion(debouncedValue);
     
         if (
           document.activeElement &&
@@ -29,23 +30,14 @@ const SearchField = (props) => {
         setIsFocus(true);
     }, [debouncedValue]);
 
-    const fetchWordSuggestion = async () => {
-        const response = await fetch(`/api/dictionary/suggestion/${debouncedValue}`);
-        const data = await response.json();
+    const getWordSuggestion = async () => {
+        const data = await fetchWordSuggestion(debouncedValue);
         setSuggestion(data);
     };
 
-    // const fetchWordMeaning = async (word) => {
-    //     const response = await fetch(`/api/dictionary/search/word/${word}`);
-    //     const data = await response.json();
-    //     setMeaning(data);
-    //     console.log(data);
-    // };
-
-    const fetchWordData = async (word) => {
+    const getWordData = async (word) => {
         setSearchWord(word);
         setIsFocus(false);
-        //fetchWordMeaning(word);
     };
 
     useOnClickOutside(suggestMenuRef, () => {
@@ -71,7 +63,7 @@ const SearchField = (props) => {
                 }}
                 onKeyUp={(e) => {
                     if (e.key === "Enter") {
-                        fetchWordData(searchWord);
+                        getWordData(searchWord);
                     }
                 }}
                 value={searchWord}
@@ -93,7 +85,7 @@ const SearchField = (props) => {
                                 className="border-b-gray-500 px-4 py-3 border-b border-solid cursor-pointer"
                                 key={index}
                                 onClick={() => {
-                                    fetchWordData(word.kanji);
+                                    getWordData(word.kanji);
                                 }}
                             >
                             

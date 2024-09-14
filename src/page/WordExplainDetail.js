@@ -9,6 +9,10 @@ import { TbPinFilled } from "react-icons/tb";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import ExampleImg from '../components/ExampleImg';
 import FlashCardListBox from '../components/FlashCardListBox';
+import { FiPlusCircle } from "react-icons/fi";
+import fetchWordList from '../services/fetchWordList';
+import fetchWordData from '../services/fetchWordData';
+import isWordInList from '../utils/checkWordInList';
 
 
 const WordExplainDetail = () => {
@@ -18,7 +22,8 @@ const WordExplainDetail = () => {
     const [meanings, setMeaning] = useState([]);
     const [examples, setExample] = useState([]);
     const [comments, setComment] = useState([]); 
-    
+    const [wordList, setWordList] = useState([]);
+
     const kindMapping = {
         n: "danh từ",
         vs: "danh từ động từ",
@@ -31,8 +36,7 @@ const WordExplainDetail = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                let response = await fetch(`/api/dictionary/search/word/${searchTerm}`);
-                let data = await response.json();
+                const data = await fetchWordData(searchTerm)
                 setMeaning(data.meaning);
                 setExample(data.example);
                 setComment(data.comment);
@@ -49,25 +53,32 @@ const WordExplainDetail = () => {
     }));
 
     // Đảm bảo `handleListChange` là một hàm
-    const handleListChange = (selectedOption) => {
+    const handleListChange = async (selectedOption) => {
         console.log("Selected Option:", selectedOption);
-        // Xử lý giá trị được chọn
+        const data = await fetchWordList(selectedOption); // Fetch danh sách từ của list được chọn
+        setWordList(data.words);
+        console.log("wordList:", wordList)
     };
 
     return (
         <div className='relative border-4 border-[#f4f4f4] h-[82svh] w-full rounded-xl p-3 custom-scroll-bar-2 overflow-y-auto'>
-            <FlashCardListBox onSelectListChange={handleListChange} />
+            <div className="absolute top-3 right-3">
+                <FlashCardListBox onSelectListChange={handleListChange}/>
+            </div>
             <div>
-                <h1 className='text-5xl font-semibold text-dark-green mb-6'>
-                    {kanjiCharacters.map((kanji, idx) => (
-                        <Link to={`/search/kanji/${kanji.char}`}>
-                            <span key={idx} className='cursor-pointer hover:text-blue-500'>
-                                {kanji.char}
-                            </span>
-                        </Link>
-                    ))}
-                </h1>
-                <p className='font-medium text-red-orange mb-2'>
+                <div className='flex flex-row items-center'>
+                    <h1 className='text-5xl font-semibold text-dark-green'>
+                        {kanjiCharacters.map((kanji, idx) => (
+                            <Link to={`/search/kanji/${kanji.char}`}>
+                                <span key={idx} className='cursor-pointer hover:text-blue-500'>
+                                    {kanji.char}
+                                </span>
+                            </Link>
+                        ))}
+                    </h1>
+                    {!isWordInList(searchTerm.trim(), wordList) ? <FiPlusCircle className='ml-3 text-3xl text-green-500 cursor-pointer'/> : ""}
+                </div>
+                <p className='font-medium text-red-orange mb-2 mt-6'>
                     {meanings.phonetic}
                 </p>
                 <p className='text-2xl m-2'>

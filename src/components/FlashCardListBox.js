@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import fetchList from '../services/fetchList';
 
 const FlashCardListBox = ({ onSelectListChange }) => {
     const [lists, setList] = useState([]);
@@ -11,8 +12,7 @@ const FlashCardListBox = ({ onSelectListChange }) => {
 
     const getList = async () => {
         try {
-            let response = await fetch('/api/flashcard/all/');
-            let data = await response.json();
+            let data = await fetchList();
             // Convert lists to options suitable for react-select
             const options = data.map((list) => ({
                 value: list.id,
