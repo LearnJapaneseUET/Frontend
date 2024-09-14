@@ -2,6 +2,10 @@ import getCookie from '../utils/getCookie';
 
 const deleteList = async (listId) => {
     const csrftoken = getCookie('csrftoken');
+
+    if (!listId) {
+        return { success: false };
+    }
     try {
         const response = await fetch(`/api/flashcard/list/${listId}/delete/`, {
             method: "DELETE",

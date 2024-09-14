@@ -3,6 +3,10 @@ import getCookie from '../utils/getCookie';
 const postNewList = async (name) => {
     const csrftoken = getCookie('csrftoken');
 
+    if (!name) {
+        return { success: false };
+    }
+
     try {
         const response = await fetch('/api/flashcard/list/create/', {
             method: 'POST',

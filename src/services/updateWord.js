@@ -2,7 +2,9 @@ import getCookie from '../utils/getCookie';
 
 const updateWord = async (wordId, meaning, furigana) => {
     const csrftoken = getCookie('csrftoken');
-    console.log("update:", wordId, meaning, furigana);
+    if (!wordId || !meaning || !furigana) {
+        return { success: false };
+    }
     try {
         const response = await fetch(`/api/flashcard/word/${wordId}/update/`, {
             method: 'PUT',

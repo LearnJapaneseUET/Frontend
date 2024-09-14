@@ -1,23 +1,21 @@
 import getCookie from '../utils/getCookie';
 
-const postNewWordData = async (newWord, furigana, meaning, listId) => {
+const addWord = async (wordWriting, listId) => {
     const csrftoken = getCookie('csrftoken');
 
-    if (!newWord || !furigana || !meaning || !listId) {
+    if (!wordWriting || !listId) {
         return { success: false };
     }
 
     try {
-        const response = await fetch('/api/flashcard/word/create/', {
+        const response = await fetch('/api/flashcard/word/add/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify({
-                w: newWord,
-                p: furigana,
-                m: meaning,
+                w: wordWriting,
                 listId: listId
             })
         });
@@ -33,4 +31,4 @@ const postNewWordData = async (newWord, furigana, meaning, listId) => {
     }
 };
 
-export default postNewWordData;
+export default addWord;

@@ -3,6 +3,11 @@ import getCookie from '../utils/getCookie';
 
 const deleteWord = async (wordId, listId) => {
     const csrftoken = getCookie('csrftoken');
+    
+    if (!wordId || !listId) {
+        return { success: false };
+    }
+
     try {
         const response = await fetch(`/api/flashcard/word/delete/`, {
             method: 'DELETE',
