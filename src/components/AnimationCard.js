@@ -102,19 +102,19 @@ const AnimationCard = ({words}) => {
                             }}
                             >
                             {/* Front Side */}
-                            <div className="absolute w-full h-full bg-gradient-to-br from-yellow-500 to-pink-500 flex items-center justify-center rounded-lg shadow-md backface-hidden">
+                            <div className="absolute w-full h-full bg-gradient-to-br from-dark-yellow to-red-orange flex items-center justify-center rounded-lg shadow-md backface-hidden">
                                 <h2 className="text-white text-5xl font-bold">{word.w}</h2>
                             </div>
                 
                             {/* Back Side */}
-                            <div className="absolute w-full h-full bg-white rounded-lg shadow-md transform rotate-y-180 flex flex-col justify-center items-center p-8 backface-hidden">
+                            <div className="absolute w-full h-full bg-white border-4 border-dark-yellow rounded-lg shadow-md transform rotate-y-180 flex flex-col justify-center items-center p-8 backface-hidden">
                                 <div className="card__header relative">
                                   <img
-                                      src="https://i.pinimg.com/564x/b9/c4/7e/b9c47ef70bff06613d397abfce02c6e7.jpg"
+                                      src="https://i.pinimg.com/564x/14/c8/9f/14c89f577db17526bfdd268e6da77f9f.jpg"
                                       alt="Profile"
-                                      className="w-32 h-32 rounded-full mx-auto border-4 border-white object-cover"
+                                      className="w-32 h-32 rounded-full mx-auto border-2 border-white object-cover"
                                   />
-                                  <h2 className="text-gray-800 text-2xl font-extrabold text-center mt-4">
+                                  <h2 className="text-gray-800 text-3xl font-extrabold text-center mt-4">
                                       {word.w}
                                   </h2>
                                   </div>

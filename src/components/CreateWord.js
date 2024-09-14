@@ -25,7 +25,7 @@ const CreateWord = ({ fetchWord, setShowCreateForm }) => {
         const result = await postNewWordData(newWord, Furigana, Meaning, listId);
 
         if (result.success) {
-            alert('Từ mới đã được thêm thành công!');
+            // alert('Từ mới đã được thêm thành công!');
             // Reset các giá trị sau khi thêm thành công
             setNewWord('');
             setFurigana('');
