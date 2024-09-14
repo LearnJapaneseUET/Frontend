@@ -1,8 +1,6 @@
 import React from 'react'
 import AnalysicsOverview from '../components/AnalysicsOverview'
-// import CurrentLessons from '../components/CurrentLessons'
-// import CurrentActivity from '../components/CurrentActivity'
-import Current from '../components/Current'
+import CurrentLessons from '../components/CurrentLessons'
 
 const HomePage = () => {
   return (
@@ -11,14 +9,8 @@ const HomePage = () => {
         <AnalysicsOverview/>
       </div>
       <div className='gap-16 pt-6'>
-        {/* <div>
+        <div>
           <CurrentLessons/>
-        </div>
-        <div>
-          <CurrentActivity/>
-        </div> */}
-        <div>
-          <Current />
         </div>
       </div>
     </div>

@@ -91,22 +91,32 @@ const Lists = () => {
                     className='text-4xl text-green-500 cursor-pointer'
                     onClick={() => setModalOpen(true)}
                 />
-                <MdDelete
-                    className='mt-4 text-4xl text-red-500 cursor-pointer'
-                    onClick={() => setIsDeleting(!isDeleting)}
-                />
+                {isDeleting ? (
+                
+                    <div className='flex flex-col'>
+                        <button
+                            onClick={() => handleDeleteLists()}
+                            className='my-4 bg-red-orange text-white p-2 rounded hover:bg-red-500 cursor-pointer'
+                        >
+                            Xóa
+                        </button>
+                        <button
+                            onClick={() => setIsDeleting(false)}
+                            className='bg-gray-300 text-gray-800 p-2 rounded hover:bg-gray-400 cursor-pointer'
+                        >
+                            Hủy
+                        </button>
+                    </div>
+                    
+                    ):
+                    (
+                        <MdDelete
+                            className='mt-4 text-4xl text-red-500 cursor-pointer'
+                            onClick={() => setIsDeleting(true)}
+                        />
+                    )
+                }
             </div>
-
-            {isDeleting && (
-                <div className='absolute bottom-3 right-3'>
-                    <button
-                        onClick={handleDeleteLists}
-                        className='bg-red-500 text-white p-2 rounded hover:bg-red-600'
-                    >
-                        Xóa danh sách đã chọn
-                    </button>
-                </div>
-            )}
 
             {modalOpen && (
                 <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>

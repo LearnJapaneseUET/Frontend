@@ -38,16 +38,21 @@ const WordExplainDetail = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const data = await fetchWordData(searchTerm)
+                const data = await fetchWordData(searchTerm);
                 setMeaning(data.meaning);
                 setExample(data.example);
                 setComment(data.comment);
+                // Cập nhật selectedList khi searchTerm thay đổi
+                if (selectedList) {
+                    const wordList = await fetchWordList(selectedList);
+                    setIsInList(isWordInList(searchTerm.trim(), wordList.words));
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         getData();
-    }, [searchTerm]); // Add searchTerm as a dependency
+    }, [searchTerm, selectedList]); // Thêm selectedList vào dependency array
 
     const kanjiCharacters = searchTerm?.split('').map((char, index) => ({
         char,
@@ -63,6 +68,7 @@ const WordExplainDetail = () => {
     };
 
     const handleSaveWord = async () => {
+        console.log("selectedList", selectedList, "searchTerm:", searchTerm)
         if (selectedList && searchTerm) {
             const result = await addWord(searchTerm, selectedList);
 

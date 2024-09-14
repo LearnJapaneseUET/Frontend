@@ -6,6 +6,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import updateListName from '../services/updateListName';
 import fetchWordList from '../services/fetchWordList';
+import logAccessTime from '../utils/logAccessTime';
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -17,6 +18,7 @@ const ListPage = () => {
 
     useEffect(() => {
         getWord();
+        logAccessTime(listId); // Lưu thời gian khi truy cập vào trang
         // eslint-disable-next-line
     }, [listId]);
 

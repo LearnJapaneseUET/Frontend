@@ -1,43 +1,83 @@
-import React from 'react'
-import { TbSquareRoundedNumber1Filled,
-         TbSquareRoundedNumber2Filled,
-         TbSquareRoundedNumber3Filled } from "react-icons/tb";
+import React, { useEffect, useState } from 'react';
+import fetchList from '../services/fetchList';
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+
 
 const CurrentLessons = () => {
-  const lessons = [
-      { title: "Từ vựng bài 10", numWord: 34, icon: <TbSquareRoundedNumber1Filled />, Color: 'red-orange' },
-      { title: "Kanji bài 3-2", numWord: 72, icon: <TbSquareRoundedNumber2Filled />, Color: 'dark-yellow' },
-      { title: "Từ vựng bài đọc", numWord: 83, icon: <TbSquareRoundedNumber3Filled />, Color: 'dark-green' },
-  ];
-    
-  return (
-    <div className='bg-slate-50 p-4 rounded-xl'>
-        <div className='grid grid-cols-2 items-center'>
-            <h1 className='text-xl font-semibold'>Current Lessons</h1>
-            <span className='text-right'>All lessons</span>
-        </div>
-        <div className='mt-6 mx-4'>
-            {
-              lessons.map((lesson, index) => (
-                <>
-                <div  key={index} className='mb-4 p-2 grid grid-cols-[auto_1fr_auto] items-center rounded-lg gap-2 bg-white'>
-                  <span className={`text-5xl text-${lesson.Color}`}>
-                    {lesson.icon}
-                  </span>
-                  <div>
-                    <p className='font-semibold'>{lesson.title}</p>
-                    <p>Remaining: {lesson.numWord}</p>
-                  </div>
-                  <div className={`bg-${lesson.Color} bg-opacity-25 border border-solid rounded-full px-2 py-1 cursor-pointer text-center ml-4`}>
-                    <p className='font-normal'>view lesson</p>
-                  </div>
-                </div>
-                </>
-              ))
-            }
-        </div>
-    </div>
-  )
-}
+    const [lessons, setLessons] = useState([]);
+
+    useEffect(() => {
+        // Lấy danh sách các mục đã lưu từ localStorage
+        const storedEntries = JSON.parse(localStorage.getItem('listPageAccessEntries')) || [];
         
-export default CurrentLessons
+        // Hàm lấy chi tiết danh sách dựa trên listId
+        const fetchLessons = async () => {
+            try {
+                // Lấy toàn bộ danh sách từ API
+                const listData = await fetchList();
+                
+                console.log("listData:", listData)
+                console.log("storedEntries", storedEntries)
+                // Lọc những danh sách có listId khớp với storedEntries
+                const filteredData = listData.filter(list => 
+                    storedEntries.some(entry => entry.listId.toString() === list.id.toString())
+                );
+
+                console.log("filteredData", filteredData);
+
+                // Kết hợp với timestamp từ storedEntries
+                const dataWithTimestamp = filteredData.map(list => {
+                    const entry = storedEntries.find(entry => entry.listId === list.id);
+                    return {
+                        ...list,
+                        timestamp: entry ? entry.timestamp : null
+                    };
+                });
+
+                // Loại bỏ các giá trị null
+                const validData = dataWithTimestamp.filter(item => item !== null);
+
+                // Cập nhật dữ liệu vào state
+                setLessons(validData);
+            } catch (error) {
+                console.error("Lỗi khi lấy danh sách bài học:", error);
+            }
+        };
+
+        fetchLessons();
+    }, []);
+
+    // Hàm định dạng timestamp
+    const formatDate = (timestamp) => {
+        return format(new Date(timestamp), 'yyyy-MM-dd'); // Định dạng theo ý muốn
+    };
+
+    return (
+        <div>
+            <h1 className='text-xl font-semibold my-6'>Bài học gần đây</h1>
+            <div className='container flex justify-around items-center flex-wrap p-5 bg-[#FFD966] rounded-2xl'>
+                {lessons.length > 0 ? (
+                    lessons.map((lesson, index) => (
+                        <div key={index} className='card relative shadow-card rounded-lg w-3/12 h-64 group cursor-pointer'>
+                            <Link to={`/list/${lesson.id}`}>
+                                <div className='box absolute border-[3px] border-slate-100 inset-3.5 p-2 shadow-box rounded-lg flex justify-center items-center transition duration-500 group-hover:-translate-y-[20px] group-hover:shadow-box-hover group-hover:bg-[#FFACAC]'>
+                                    <div className='content p-2 text-center'>
+                                        <h2 className='absolute top-[-5px] right-2 text-7xl text-[rgba(0,0,0,0.05)] font-bold pointer-events-none group-hover:text-slate-[150] transition duration-500'>{lesson.number}</h2>
+                                        <h3 className='relative z-10 text-xl font-bold text-lg text-[#5D5D5D] group-hover:text-white'>{lesson.name}</h3>
+                                        <p className='z-10 text-[#5D5D5D] group-hover:text-white'>Lần cuối truy cập: {formatDate(lesson.timestamp)}</p>
+                                        <span className='relative bg-white text-[#5D5D5D] font-semibold inline-block mt-2 px-2 rounded-full shadow-box group-hover:bg-red-orange group-hover:text-white transition duration-500'>Xem thêm</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    ))
+                ) : (
+                    <p>Không có bài học nào để hiển thị.</p>
+                )}
+            </div>
+        </div>
+    );
+}
+
+export default CurrentLessons;
