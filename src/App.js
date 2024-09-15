@@ -12,6 +12,7 @@ import {
 import ListPage from './page/ListPage';
 import WordExplainDetail from './page/WordExplainDetail'
 import KanjiExplainDetail from './page/KanjiExplainDetail'
+import Chatbot from './components/Chatbot';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/list/:listId" element={<ListPage />} />
                 <Route path="/search/word/:searchTerm" element={<WordExplainDetail />} />
                 <Route path="/search/kanji/:searchTerm" element={<KanjiExplainDetail />} />
+                <Route path="/chatbot" element={<Chatbot />} />
               </Routes>
             </div>
 
