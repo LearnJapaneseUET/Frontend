@@ -5,7 +5,7 @@ const fetchKanjiData = async (searchTerm) => {
         return { success: false };
     }
     try {
-        const response = await axios.get(`/api/dictionary/search/kanji/${searchTerm}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dictionary/search/kanji/${searchTerm}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching Kanji data:', error);

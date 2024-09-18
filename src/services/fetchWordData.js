@@ -5,7 +5,7 @@ const fetchWordData = async (searchTerm) => {
         return { success: false };
     }
     try {
-        const response = await axios.get(`/api/dictionary/search/word/${searchTerm}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dictionary/search/word/${searchTerm}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching word data:', error);
