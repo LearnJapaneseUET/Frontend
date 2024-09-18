@@ -28,7 +28,7 @@ const CurrentLessons = () => {
 
                 // Kết hợp với timestamp từ storedEntries
                 const dataWithTimestamp = filteredData.map(list => {
-                    const entry = storedEntries.find(entry => entry.listId === list.id);
+                    const entry = storedEntries.find(entry => entry.listId.toString() === list.id.toString());                    
                     return {
                         ...list,
                         timestamp: entry ? entry.timestamp : null

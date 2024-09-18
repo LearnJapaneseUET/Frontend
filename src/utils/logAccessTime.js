@@ -6,7 +6,7 @@ const logAccessTime = (listId) => {
     // Tạo một mục mới với listId hiện tại và thời gian truy cập
     const newEntry = {
         listId: listId,
-        timestamp: new Date().toISOString() // Thời gian hiện tại theo định dạng ISO
+        timestamp: new Date().getTime() // Thời gian hiện tại theo định dạng ISO
     };
 
     // Kiểm tra xem listId đã tồn tại trong danh sách chưa
