@@ -39,7 +39,7 @@ const Chatbot = () => {
 
     // Post to Django backend
     try {
-      const response = await axios.post('/api/chat/', { message: input });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/chat/`, { message: input });
       const botMessage = { sender: 'bot', text: response.data.response };
       setMessages([...messages, userMessage, botMessage]);
 
