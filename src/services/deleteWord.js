@@ -1,27 +1,26 @@
-// src/services/deleteWord.js
+import axios from 'axios';
 import getCookie from '../utils/getCookie';
 
 const deleteWord = async (wordId, listId) => {
     const csrftoken = getCookie('csrftoken');
-    
+
     if (!wordId || !listId) {
         return { success: false };
     }
 
     try {
-        const response = await fetch(`/api/flashcard/word/delete/`, {
-            method: 'DELETE',
+        const response = await axios.delete(`/api/flashcard/word/delete/`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
             },
-            body: JSON.stringify({
+            data: {
                 wordId: wordId,
                 listId: listId
-            })
+            }
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
             return true;
         } else {
             console.error('Failed to delete word:', response.statusText);

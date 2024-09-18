@@ -1,3 +1,4 @@
+import axios from 'axios';
 import getCookie from '../utils/getCookie';
 
 const updateListName = async (listId, listName) => {
@@ -8,25 +9,19 @@ const updateListName = async (listId, listName) => {
     }
 
     try {
-        const response = await fetch(`/api/flashcard/list/${listId}/update/`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify({
-                name: listName
-            })
-        });
+        const response = await axios.put(`/api/flashcard/list/${listId}/update/`, 
+            { name: listName },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            }
+        );
 
-        if (response.ok) {
-            return true;
-        } else {
-            console.error('Failed to update list:', response.statusText);
-            return false;
-        }
+        return response.status === 200;
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Error updating list:', error);
         return false;
     }
 };

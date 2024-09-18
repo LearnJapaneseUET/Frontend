@@ -19,11 +19,13 @@ const Chatbot = () => {
 
   // Start recording and transcribing speech
   const startListening = () => {
+    setIsListening(true);
     const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
     const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
     recognizer.recognizeOnceAsync((result) => {
       setInput(result.text);  // Display the recognized text in input
+      setIsListening(false);
     });
   };
 
@@ -52,16 +54,23 @@ const Chatbot = () => {
     setIsLoading(false);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent default behavior (like form submission)
+      sendMessage();
+    }
+  };
+
   return (
-    <div className="flex flex-col h-[82svh] max-w-lg mt-3">
+    <div className="flex flex-col h-[82svh] w-full mt-3">
       <div className="messages flex flex-col space-y-4 p-3 flex-grow overflow-y-auto">
         {messages.map((msg, idx) => (
           <div key={idx}>
             {msg.sender === 'user' ? (
               <div className="chat-message">
                 <div className="flex items-end justify-end">
-                  <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-end">
-                    <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-dark-green text-white text-xl">
+                  <div className="flex flex-col space-y-2 text-xs max-w-[75svh] mx-2 order-2 items-end">
+                    <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-dark-green text-white text-xl">
                       {msg.text}
                     </span>
                   </div>
@@ -70,7 +79,7 @@ const Chatbot = () => {
             ) : (
               <div className="chat-message">
                 <div className="flex items-end">
-                  <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                  <div className="flex flex-col space-y-2 text-xs max-w-[75svh] mx-2 order-2 items-start">
                     <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600 text-xl">
                       {msg.text}
                     </span>
@@ -82,16 +91,17 @@ const Chatbot = () => {
         ))}
       </div>
   
-      <div className="input-box flex w-full p-2 bg-white border-t border-gray-300">
-        <input
+      <div className="input-box flex w-full p-2 bg-white border-t border-gray-300 items-center">
+      <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown} // Add onKeyDown handler here
           placeholder="Type a message or speak"
           className="flex-grow p-2 border border-gray-300 rounded-l-lg"
         />
-        <FaMicrophone onClick={startListening} className="text-gray-600 text-3xl "/>
-        <IoSend onClick={sendMessage} className="text-blue-500 text-3xl ml-2"/>
+        <FaMicrophone onClick={startListening} className={`text-3xl mx-2 cursor-pointer ${isListening ? 'text-blue-500' : 'text-gray-600'}`}/>
+        <IoSend onClick={sendMessage} className="text-blue-500 text-3xl"/>
       </div>
     </div>
   );

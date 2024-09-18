@@ -1,3 +1,4 @@
+import axios from 'axios';
 import getCookie from '../utils/getCookie';
 
 const postNewList = async (name) => {
@@ -8,26 +9,19 @@ const postNewList = async (name) => {
     }
 
     try {
-        const response = await fetch('/api/flashcard/list/create/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify({ name: name })
-        });
+        const response = await axios.post('/api/flashcard/list/create/', 
+            { name },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            }
+        );
 
-        if (response.ok) {
-            // Xử lý phản hồi thành công
-            const data = await response.json();
-            return { success: true, data }; // Trả về dữ liệu danh sách mới
-        } else if (response.status === 400) {
-            const errorData = await response.json();
-            return { success: false, message: errorData.error };
-        }
+        return { success: true, data: response.data };
     } catch (error) {
-        // Xử lý lỗi kết nối
-        return { success: false, message: 'Có lỗi kết nối với máy chủ.' };
+        return { success: false, message: error.response?.data?.error || 'Có lỗi xảy ra khi tạo danh sách.' };
     }
 };
 

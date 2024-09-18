@@ -1,3 +1,4 @@
+import axios from 'axios';
 import getCookie from '../utils/getCookie';
 
 const deleteList = async (listId) => {
@@ -6,16 +7,16 @@ const deleteList = async (listId) => {
     if (!listId) {
         return { success: false };
     }
+
     try {
-        const response = await fetch(`/api/flashcard/list/${listId}/delete/`, {
-            method: "DELETE",
+        const response = await axios.delete(`/api/flashcard/list/${listId}/delete/`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
             }
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
             return true;
         } else {
             console.error('Failed to delete list:', response.statusText);

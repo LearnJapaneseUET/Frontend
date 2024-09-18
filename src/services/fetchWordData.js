@@ -1,13 +1,15 @@
+import axios from 'axios';
+
 const fetchWordData = async (searchTerm) => {
     if (!searchTerm) {
         return { success: false };
     }
     try {
-        let response = await fetch(`/api/dictionary/search/word/${searchTerm}`);
-        let data = await response.json();
-        return data
+        const response = await axios.get(`/api/dictionary/search/word/${searchTerm}`);
+        return response.data;
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching word data:', error);
+        return { success: false, message: 'Có lỗi xảy ra khi tìm kiếm.' };
     }
 };
 

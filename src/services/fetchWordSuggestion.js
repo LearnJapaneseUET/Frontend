@@ -1,10 +1,16 @@
+import axios from 'axios';
+
 const fetchWordSuggestion = async (debouncedValue) => {
     if (!debouncedValue) {
         return { success: false };
     }
-    const response = await fetch(`/api/dictionary/suggestion/${debouncedValue}`);
-    const data = await response.json();
-    return data;
+    try {
+        const response = await axios.get(`/api/dictionary/suggestion/${debouncedValue}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching word suggestion:', error);
+        return { success: false, message: 'Có lỗi xảy ra khi lấy gợi ý từ.' };
+    }
 };
 
-export default fetchWordSuggestion
+export default fetchWordSuggestion;

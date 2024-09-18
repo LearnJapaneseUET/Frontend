@@ -1,3 +1,4 @@
+import axios from 'axios';
 import getCookie from '../utils/getCookie';
 
 const postNewWordData = async (newWord, furigana, meaning, listId) => {
@@ -8,28 +9,24 @@ const postNewWordData = async (newWord, furigana, meaning, listId) => {
     }
 
     try {
-        const response = await fetch('/api/flashcard/word/create/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify({
+        const response = await axios.post('/api/flashcard/word/create/', 
+            {
                 w: newWord,
                 p: furigana,
                 m: meaning,
-                listId: listId
-            })
-        });
+                listId
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            }
+        );
 
-        if (response.ok) {
-            return { success: true };
-        } else {
-            const errorData = await response.json();
-            return { success: false, message: errorData.error || 'Có lỗi xảy ra khi thêm từ mới.' };
-        }
+        return { success: true };
     } catch (error) {
-        return { success: false, message: 'Có lỗi kết nối với máy chủ.' };
+        return { success: false, message: error.response?.data?.error || 'Có lỗi xảy ra khi thêm từ mới.' };
     }
 };
 
