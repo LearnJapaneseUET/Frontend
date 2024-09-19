@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDebounce } from "../hooks/useDebounce"; 
 import { useOnClickOutside } from "usehooks-ts";
 import { FaSearch } from "react-icons/fa";
@@ -9,9 +9,13 @@ const SearchField = (props) => {
     const [suggestions, setSuggestion] = useState([]);
     const [searchWord, setSearchWord] = useState("");
     const [isFocus, setIsFocus] = useState(false);
-    // const [meaning, setMeaning] = useState([]);
     const suggestMenuRef = useRef(null);
     const debouncedValue = useDebounce(searchWord, 500); // Debounced value
+
+    const getWordSuggestion = useCallback(async (value) => {
+        const data = await fetchWordSuggestion(value);
+        setSuggestion(data);
+    }, []);
 
     useEffect(() => {   
         if (!debouncedValue.trim()) {
@@ -28,12 +32,7 @@ const SearchField = (props) => {
           return setIsFocus(false);
         }
         setIsFocus(true);
-    }, [debouncedValue]);
-
-    const getWordSuggestion = async () => {
-        const data = await fetchWordSuggestion(debouncedValue);
-        setSuggestion(data);
-    };
+    }, [debouncedValue, getWordSuggestion]);
 
     const getWordData = async (word) => {
         setSearchWord(word);
@@ -79,21 +78,20 @@ const SearchField = (props) => {
                     ref={suggestMenuRef}
                     className="text-white bg-gray-600 max-h-96 custom-scroll-bar-2 overflow-y-auto rounded-md"
                 >
-                    {suggestions.map((word, index) => (
-                        <Link to={`/search/word/${word.kanji}`}>
+                    {suggestions?.map((word, index) => (
+                        <Link to={`/search/word/${word?.kanji}`} key={index}>
                             <div
                                 className="border-b-gray-500 px-4 py-3 border-b border-solid cursor-pointer"
-                                key={index}
                                 onClick={() => {
                                     getWordData(word.kanji);
                                 }}
                             >
-                            
+                             
                                 <div className="gap-x-3 flex">
-                                        <span className="font-bold text-green-500">{word.kanji}</span>
-                                        <span className="text-red-400">{word.reading}</span>
+                                        <span className="font-bold text-green-500">{word?.kanji}</span>
+                                        <span className="text-red-400">{word?.reading}</span>
                                 </div>
-                                <div className="truncate">{word.meaning}</div>
+                                <div className="truncate">{word?.meaning}</div>
                             </div>
                         </Link>
                     ))}

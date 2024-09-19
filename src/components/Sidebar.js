@@ -1,8 +1,10 @@
 import {React, useState} from 'react'
-import { AiOutlineSetting, AiOutlineBarChart, AiOutlineMail } from 'react-icons/ai';
-import { BsArrowLeftShort, BsFillImageFill  } from "react-icons/bs";
-import { GiJapaneseBridge } from "react-icons/gi";
+import { AiOutlineSetting } from 'react-icons/ai';
+import { BsArrowLeftShort  } from "react-icons/bs";
+import { GiJapaneseBridge,GiCardPick } from "react-icons/gi";
 import { RiDashboardFill } from "react-icons/ri";
+import { MdSlowMotionVideo } from "react-icons/md";
+import { TbMessageChatbot } from "react-icons/tb";
 import Styding from "../Assets/sidebar_decor.png"
 import {Link} from 'react-router-dom'
 
@@ -11,9 +13,9 @@ const Sidebar = () => {
     const Menus = [
         { title: "Dashboard", link: null },
         // { title: "Dictionary", link: "/",icon: <AiOutlineFileText /> },
-        { title: "Flashcard", link: "/list/all", icon: <BsFillImageFill /> },
-        { title: "Sub Video", link: null, icon: <AiOutlineBarChart /> },
-        { title: "Kaiwa", link: null, icon: <AiOutlineMail /> },
+        { title: "Flashcard", link: "/list/all", icon: <GiCardPick /> },
+        { title: "Sub Video", link: null, icon: <MdSlowMotionVideo /> },
+        { title: "Kaiwa", link: "/chatbot", icon: <TbMessageChatbot /> },
         { title: "Setting", link: null,spacing: true, icon: <AiOutlineSetting/>},
       ];
 
