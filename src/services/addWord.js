@@ -22,7 +22,7 @@ const addWord = async (wordWriting, listId) => {
         });
 
         // Kiểm tra phản hồi nếu thành công
-        if (response.status === 200) {
+        if (response.status === 201) {
             return { success: true };
         } else {
             return { success: false, message: 'Có lỗi xảy ra khi thêm từ mới.' };
