@@ -9,7 +9,7 @@ const updateWord = async (wordId, meaning, furigana) => {
     }
 
     try {
-        const response = await axios.put(`/api/flashcard/word/${wordId}/update/`, 
+        const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/word/${wordId}/update/`, 
             {
                 meaning,
                 furigana

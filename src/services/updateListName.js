@@ -9,7 +9,7 @@ const updateListName = async (listId, listName) => {
     }
 
     try {
-        const response = await axios.put(`/api/flashcard/list/${listId}/update/`, 
+        const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/list/${listId}/update/`, 
             { name: listName },
             {
                 headers: {

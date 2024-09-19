@@ -9,7 +9,7 @@ const deleteWord = async (wordId, listId) => {
     }
 
     try {
-        const response = await axios.delete(`/api/flashcard/word/delete/`, {
+        const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/word/delete/`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,

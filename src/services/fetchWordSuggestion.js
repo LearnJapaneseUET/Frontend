@@ -5,7 +5,7 @@ const fetchWordSuggestion = async (debouncedValue) => {
         return { success: false };
     }
     try {
-        const response = await axios.get(`/api/dictionary/suggestion/${debouncedValue}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dictionary/suggestion/${debouncedValue}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching word suggestion:', error);
