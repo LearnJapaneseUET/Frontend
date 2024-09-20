@@ -5,16 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import { TbHttpDelete } from "react-icons/tb";
 
 const Task = () => {
-    const [tasks, setTasks] = useState([
-        { content: "Học 30 từ kanji", is_done: true },
-        { content: "Xem 1 video tiếng nhật", is_done: true },
-        { content: "Nghe choukai 15p", is_done: false },
-        { content: "Làm bài tập sách mimi", is_done: false },
-        { content: "Ôn bài cũ", is_done: true },
-        { content: "Ôn bài cũ", is_done: true },
-        { content: "Ôn bài cũ", is_done: true },
-        // Add more tasks as needed
-    ]);
+    const [tasks, setTasks] = useState([]);
 
     const [newTask, setNewTask] = useState("");
     const [editIndex, setEditIndex] = useState(null);
@@ -22,7 +13,7 @@ const Task = () => {
 
     const toggleTaskDone = (index) => {
         setTasks(prevTasks => 
-            prevTasks.map((task, i) => 
+            prevTasks?.map((task, i) => 
                 i === index ? { ...task, is_done: !task.is_done } : task
             )
         );
@@ -42,7 +33,7 @@ const Task = () => {
 
     const saveEdit = () => {
         if (editTask.trim()) {
-            setTasks(tasks.map((task, i) =>
+            setTasks(tasks?.map((task, i) =>
                 i === editIndex ? { ...task, content: editTask } : task
             ));
             setEditIndex(null);
@@ -82,7 +73,7 @@ const Task = () => {
                     </button>
                 </div>
                 <div className='max-h-[55svh] overflow-y-auto mt-6 pr-2'>
-                    {tasks.map((task, index) => (
+                    {tasks?.map((task, index) => (
                         <div key={index} className='mb-8 mx-2 flex flex-row items-center rounded-lg p-2 bg-[#F8E8EE]'>
                             <span 
                                 className='text-2xl text-dark-green cursor-pointer' 
@@ -108,7 +99,7 @@ const Task = () => {
                                     </>
                                 ) : (
                                     <>
-                                        {task.content}
+                                        {task?.content}
                                     </>
                                 )}
                             </span>

@@ -14,7 +14,7 @@ const FlashCardListBox = ({ onSelectListChange }) => {
         try {
             let data = await fetchList();
             // Convert lists to options suitable for react-select
-            const options = data.map((list) => ({
+            const options = data?.map((list) => ({
                 value: list.id,
                 label: list.name,
             }));

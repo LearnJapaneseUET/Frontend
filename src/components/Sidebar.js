@@ -30,7 +30,7 @@ const Sidebar = () => {
                     <h1 className={`text-red-500 origin-left font-medium text-xl duration-300 ${!open && "hidden"}`}>Learning_Japanese</h1>
                 </div>
                 <ul className='pt-2'>
-                    {Menus.map((menu, index) => (
+                    {Menus?.map((menu, index) => (
                         <div key={index}>
                             <Link to={menu.link || "/"}>
                                 <li className={`text-blue-90 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? "mt-8" : "mt-2"}`}>

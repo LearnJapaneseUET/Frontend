@@ -58,7 +58,7 @@ const ListView = ({ words, listId, fetchWord }) => {
             {/* Danh sách từ */}
             {words && words.length > 0 && (
                 <div className="list_detail">
-                    {words.map((word, index) => (
+                    {words?.map((word, index) => (
                         <div key={index} className='flex items-center'>
                             {editIndex === index ? (
                                 <div className='flex w-full items-center px-2'>

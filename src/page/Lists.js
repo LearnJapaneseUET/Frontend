@@ -68,7 +68,7 @@ const Lists = () => {
     return (
         <div className='relative'>
             <div className="lists">
-                {lists.map((list) => (
+                {lists?.map((list) => (
                     <div key={list.id} className='m-1 w-[100svh] flex items-center'>
                         {isDeleting && (
                             <input

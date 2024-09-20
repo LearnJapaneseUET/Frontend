@@ -64,14 +64,14 @@ const Chatbot = () => {
   return (
     <div className="flex flex-col h-[82svh] w-full mt-3">
       <div className="messages flex flex-col space-y-4 p-3 flex-grow overflow-y-auto">
-        {messages.map((msg, idx) => (
+        {messages?.map((msg, idx) => (
           <div key={idx}>
-            {msg.sender === 'user' ? (
+            {msg?.sender === 'user' ? (
               <div className="chat-message">
                 <div className="flex items-end justify-end">
                   <div className="flex flex-col space-y-2 text-xs max-w-[75svh] mx-2 order-2 items-end">
                     <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-dark-green text-white text-xl">
-                      {msg.text}
+                      {msg?.text}
                     </span>
                   </div>
                 </div>
@@ -81,7 +81,7 @@ const Chatbot = () => {
                 <div className="flex items-end">
                   <div className="flex flex-col space-y-2 text-xs max-w-[75svh] mx-2 order-2 items-start">
                     <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600 text-xl">
-                      {msg.text}
+                      {msg?.text}
                     </span>
                   </div>
                 </div>

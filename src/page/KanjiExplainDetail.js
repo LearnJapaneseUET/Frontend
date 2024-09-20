@@ -33,7 +33,7 @@ const KanjiExplainDetail = () => {
             setSvgData(data.kanjiArt.replace(/ns[0-9]+:/g, '')
                                     .replace(/xmlns(:[a-z0-9]+)?="[^"]+"/g, ''));
             
-            const parts = data.meaning.detail.split('##').map(part => part.trim());
+            const parts = data.meaning.detail.split('##')?.map(part => part.trim());
             setDetailParts(parts);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -86,7 +86,7 @@ const KanjiExplainDetail = () => {
                     <div className="flex">
                         <div className="w-[10svh] flex-shrink-0 p-1 rounded-md bg-[#C8FFD4] mr-2 my-1 font-medium content-center"> Nghĩa: </div>
                         <div className="flex-grow">
-                            {detailParts.map((part, index) => (
+                            {detailParts?.map((part, index) => (
                                 <div key={index}>
                                     {part}
                                 </div>
@@ -106,20 +106,20 @@ const KanjiExplainDetail = () => {
                 <FaRegComments className='text-2xl mr-2 text-red-orange'/>
                 <div>
                     {comments && Object.keys(comments).length > 0 ? (
-                    Object.keys(comments).map((key, idx) => (
+                    Object.keys(comments)?.map((key, idx) => (
                         <div key={idx} className="ml-8 my-3 pb-2 border-b-2">                                    
-                            <p>{comments[key].mean}</p>
+                            <p>{comments[key]?.mean}</p>
                             <p className='flex justify-between'>
                                 <div className='inline-flex items-center mt-1'>
                                     <span className='mr-3 inline-flex items-center'>
-                                        <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key].like}
+                                        <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key]?.like}
                                     </span>
                                     <span className='inline-flex items-center'>
-                                        <AiOutlineDislike className='mr-1 text-red-500'/> {comments[key].dislike}
+                                        <AiOutlineDislike className='mr-1 text-red-500'/> {comments[key]?.dislike}
                                     </span>
                                 </div>
                                 <div>
-                                    <p>{comments[key].username}</p>
+                                    <p>{comments[key]?.username}</p>
                                 </div>
                             </p>
                         </div>

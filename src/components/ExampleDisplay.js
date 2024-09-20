@@ -22,12 +22,12 @@ const ExampleDisplay = ({meanings, listId}) => {
     const handleSaveWord = async (word) => {
         console.log("Saving word:", word, "to listId:", listId);
         try {
-            const result = await addWord(word.w, listId);
+            const result = await addWord(word?.w, listId);
             if (result.success) {
                 await getWord();
                 console.log('Word added successfully');
             } else {
-                console.error('Failed to add word:', result.message);
+                console.error('Failed to add word:', result?.message);
             }
         } catch (error) {
             console.error('Error saving word:', error);
@@ -41,7 +41,7 @@ const ExampleDisplay = ({meanings, listId}) => {
                 <p className="font-bold text-lg">
                     Ví dụ
                 </p>
-                {meanings.examples && meanings.examples.length > 0 ? (meanings.examples.map((example, index) => (
+                {meanings.examples && meanings.examples.length > 0 ? (meanings.examples?.map((example, index) => (
                     <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                         <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
                         {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
@@ -61,11 +61,11 @@ const ExampleDisplay = ({meanings, listId}) => {
                     <p className="font-semibold text-lg w-auto bg-[#C8FFD4] p-2 rounded-xl">
                         Kunyomi
                     </p>
-                        {meanings.example_kun && Object.keys(meanings.example_kun).length > 0 ? (Object.keys(meanings.example_kun).map((key) => (
+                        {meanings.example_kun && Object.keys(meanings.example_kun).length > 0 ? (Object.keys(meanings.example_kun)?.map((key) => (
                             <div key={key}>
                                 <h2 className="inline-block font-semibold text-lg w-auto text-red-500 pt-3 pb-1">{key}</h2>
                                 <ul>
-                                    {meanings.example_kun[key].map((example, index) => (
+                                    {meanings.example_kun[key]?.map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
                                             {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words
@@ -85,11 +85,11 @@ const ExampleDisplay = ({meanings, listId}) => {
                     <p className="font-semibold text-lg w-auto bg-[#C8FFD4] p-2 rounded-xl mt-6">
                         Onyomi
                     </p>
-                        {meanings.example_on && Object.keys(meanings.example_on).length > 0 ? (Object.keys(meanings.example_on).map((key) => (
+                        {meanings.example_on && Object.keys(meanings.example_on).length > 0 ? (Object.keys(meanings.example_on)?.map((key) => (
                             <div key={key}>
                                 <h2 className="inline-block font-semibold text-lg w-auto text-red-500 pt-3 pb-1">{key}</h2>
                                 <ul>
-                                    {meanings.example_on[key].map((example, index) => (
+                                    {meanings.example_on[key]?.map((example, index) => (
                                         <div key={index} className='flex flex-row items-center hover:bg-gray-200 rounded-xl'>
                                             <WordItem word={example} className='flex flex-row flex-grow p-1 text-justify' />
                                             {listId && !isWordInList(example.w, wordList) && ( // Chỉ hiển thị TiPlus nếu từ không có trong danh sách words

@@ -54,7 +54,7 @@ const WordExplainDetail = () => {
         getData();
     }, [searchTerm, selectedList]); // Thêm selectedList vào dependency array
 
-    const kanjiCharacters = searchTerm?.split('').map((char, index) => ({
+    const kanjiCharacters = searchTerm?.split('')?.map((char, index) => ({
         char,
         index,
     }));
@@ -92,10 +92,10 @@ const WordExplainDetail = () => {
             <div>
                 <div className='flex flex-row items-center'>
                     <h1 className='text-5xl font-semibold text-dark-green'>
-                        {kanjiCharacters.map((kanji, idx) => (
+                        {kanjiCharacters?.map((kanji, idx) => (
                             <Link to={`/search/kanji/${kanji.char}`}>
                                 <span key={idx} className='cursor-pointer hover:text-blue-500'>
-                                    {kanji.char}
+                                    {kanji?.char}
                                 </span>
                             </Link>
                         ))}
@@ -107,7 +107,7 @@ const WordExplainDetail = () => {
                     }
                 </div>
                 <p className='font-medium text-red-orange mb-2 mt-6'>
-                    {meanings.phonetic}
+                    {meanings?.phonetic}
                 </p>
                 <p className='text-2xl m-2'>
                     <AiOutlineSound 
@@ -118,9 +118,9 @@ const WordExplainDetail = () => {
                 <p className='inline-flex items-center mx-2 text-red-600'>
                     <CiStar />
                     {meanings?.means?.length > 0 ? (
-                        meanings.means.map((mean, index) => (
+                        meanings?.means?.map((mean, index) => (
                             <span key={index}>{
-                                mean?.kind?.split(', ').map((kindItem, i, arr) => (
+                                mean?.kind?.split(', ')?.map((kindItem, i, arr) => (
                                     <span key={i} className='mx-1'>
                                         {kindMapping[kindItem] || kindItem}
                                         {i < arr.length - 1 && ','}    
@@ -137,23 +137,23 @@ const WordExplainDetail = () => {
                 <div>
                     <div>
                         {meanings?.means?.length > 0 ? (
-                            meanings.means.map((mean, index) => (
+                            meanings?.means?.map((mean, index) => (
                                 <div key={index}>
                                     <p className='inline-flex items-center m-2 text-blue-700 text-lg'>
                                         <TbPinFilled className='text-2xl mr-1 text-red-orange'/> 
-                                        <span className='text-xl'>{mean.mean}</span>
+                                        <span className='text-xl'>{mean?.mean}</span>
                                     </p>
-                                    {mean.examples && mean.examples.length > 0 ? (
-                                    mean.examples.map((example, idx) => (
+                                    {mean?.examples && mean?.examples?.length > 0 ? (
+                                    mean?.examples?.map((example, idx) => (
                                     <div key={idx} className='ml-8'>
                                         <p className='inline-flex items-center text-lg '>
-                                            <span className='text-red-600'>{example.content}</span>
+                                            <span className='text-red-600'>{example?.content}</span>
                                             <AiOutlineSound 
-                                                onClick={() => textToSpeech(example.transcription)} // Gọi hàm khi bấm vào biểu tượng
+                                                onClick={() => textToSpeech(example?.transcription)} // Gọi hàm khi bấm vào biểu tượng
                                                 className='cursor-pointer ml-2'
                                             />
                                         </p>
-                                        <p>{example.mean}</p>
+                                        <p>{example?.mean}</p>
                                     </div>
                                     ))
                                     ) : (
@@ -166,18 +166,18 @@ const WordExplainDetail = () => {
                         )}
                         <div>
                             {examples && Object.keys(examples).length > 0 ? (
-                            Object.keys(examples).map((key, idx) => (
+                            Object.keys(examples)?.map((key, idx) => (
                                 <div key={idx} className="ml-8 my-2">                                    
                                     {/* Hiển thị nội dung (content) */}
                                     <p className="inline-flex items-center text-lg">
-                                        <span className='text-red-600'>{examples[key].content}</span>
+                                        <span className='text-red-600'>{examples[key]?.content}</span>
                                         <  AiOutlineSound 
-                                            onClick={() => textToSpeech(examples[key].transcription)} // Gọi hàm khi bấm vào biểu tượng
+                                            onClick={() => textToSpeech(examples[key]?.transcription)} // Gọi hàm khi bấm vào biểu tượng
                                             className='cursor-pointer ml-2'
                                         />
                                     </p>
                                     {/* Hiển thị nghĩa (mean) */}
-                                    <p>{examples[key].mean}</p>
+                                    <p>{examples[key]?.mean}</p>
                                 </div>
                             ))
                             ) : (
@@ -196,20 +196,20 @@ const WordExplainDetail = () => {
                 <FaRegComments className='text-2xl mr-2 text-red-orange'/>
                 <div>
                     {comments && Object.keys(comments).length > 0 ? (
-                    Object.keys(comments).map((key, idx) => (
+                    Object.keys(comments)?.map((key, idx) => (
                         <div key={idx} className="ml-8 my-3 pb-2 border-b-2">                                    
-                            <p>{comments[key].mean}</p>
+                            <p>{comments[key]?.mean}</p>
                             <p className='flex justify-between'>
                                 <div className='inline-flex items-center mt-1'>
                                     <span className='mr-3 inline-flex items-center'>
-                                        <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key].like}
+                                        <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key]?.like}
                                     </span>
                                     <span className='inline-flex items-center'>
-                                        <AiOutlineDislike className='mr-1 text-red-500'/> {comments[key].dislike}
+                                        <AiOutlineDislike className='mr-1 text-red-500'/> {comments[key]?.dislike}
                                     </span>
                                 </div>
                                 <div>
-                                    <p>{comments[key].username}</p>
+                                    <p>{comments[key]?.username}</p>
                                 </div>
                             </p>
                         </div>

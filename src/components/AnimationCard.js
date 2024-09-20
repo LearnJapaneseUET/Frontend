@@ -92,7 +92,7 @@ const AnimationCard = ({words}) => {
         <div className='w-[50svw] m-auto'>
             <div className='p-20'>
                 <Slider ref={sliderRef} {...settings}>
-                    {words.map((word, index) => (
+                    {words?.map((word, index) => (
                         <div key={index} className="w-full h-full !flex justify-center items-center">
                             <div
                             className={`relative w-96 h-96 ${!isChange ? 'transition-transform duration-1000' : ''} transform-style-preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
@@ -103,7 +103,7 @@ const AnimationCard = ({words}) => {
                             >
                             {/* Front Side */}
                             <div className="absolute w-full h-full bg-gradient-to-br from-dark-yellow to-red-orange flex items-center justify-center rounded-lg shadow-md backface-hidden">
-                                <h2 className="text-white text-5xl font-bold">{word.w}</h2>
+                                <h2 className="text-white text-5xl font-bold">{word?.w}</h2>
                             </div>
                 
                             {/* Back Side */}
@@ -115,14 +115,14 @@ const AnimationCard = ({words}) => {
                                       className="w-32 h-32 rounded-full mx-auto border-2 border-white object-cover"
                                   />
                                   <h2 className="text-gray-800 text-3xl font-extrabold text-center mt-4">
-                                      {word.w}
+                                      {word?.w}
                                   </h2>
                                   </div>
                                   <div className="card__body mt-4 text-center">
-                                  <h3 className="text-xl text-gray-900 font-semibold">{word.h}</h3>
-                                  <p className="text-xl text-gray-900">{word.p}</p>
+                                  <h3 className="text-xl text-gray-900 font-semibold">{word?.h}</h3>
+                                  <p className="text-xl text-gray-900">{word?.p}</p>
                                   <p className="text-gray-700 mt-2">
-                                     {word.m}
+                                     {word?.m}
                                   </p>
                                 </div>
                             </div>
