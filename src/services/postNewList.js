@@ -9,7 +9,7 @@ const postNewList = async (name) => {
     }
 
     try {
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/list/create/`, 
+        const response = await axios.post(`${import.meta.env.REACT_APP_BACKEND_URL}/api/flashcard/list/create/`, 
             { name },
             {
                 headers: {

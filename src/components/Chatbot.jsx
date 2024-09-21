@@ -4,8 +4,8 @@ import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 import { FaMicrophone } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 
-const AZURE_SUBSCRIPTION_KEY = process.env.REACT_APP_AZURE_SUBSCRIPTION_KEY;
-const AZURE_REGION = process.env.REACT_APP_AZURE_REGION;
+const AZURE_SUBSCRIPTION_KEY = import.meta.env.REACT_APP_AZURE_SUBSCRIPTION_KEY;
+const AZURE_REGION = import.meta.env.REACT_APP_AZURE_REGION;
 
 const Chatbot = () => {
   const [input, setInput] = useState('');
@@ -39,7 +39,7 @@ const Chatbot = () => {
 
     // Post to Django backend
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/chat/`, { message: input });
+      const response = await axios.post(`${import.meta.env.REACT_APP_BACKEND_URL}/api/chat/`, { message: input });
       const botMessage = { sender: 'bot', text: response.data.response };
       setMessages([...messages, userMessage, botMessage]);
 

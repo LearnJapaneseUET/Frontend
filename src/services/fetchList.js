@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const fetchList = async () => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/all/`);
+        const response = await axios.get(`${import.meta.env.REACT_APP_BACKEND_URL}/api/flashcard/all/`);
         return response.data;
     } catch (error) {
         console.error('Error fetching list:', error);

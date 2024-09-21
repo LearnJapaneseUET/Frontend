@@ -9,7 +9,7 @@ const postNewWordData = async (newWord, furigana, meaning, listId) => {
     }
 
     try {
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/flashcard/word/create/`, 
+        const response = await axios.post(`${import.meta.env.REACT_APP_BACKEND_URL}/api/flashcard/word/create/`, 
             {
                 w: newWord,
                 p: furigana,

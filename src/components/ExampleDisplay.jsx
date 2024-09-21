@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import WordItem from '../components/WordItem'
+import WordItem from './WordItem'
 import { TiPlus } from "react-icons/ti";
 import fetchWordList from '../services/fetchWordList';
 import isWordInList from '../utils/checkWordInList';
