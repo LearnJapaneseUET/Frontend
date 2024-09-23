@@ -199,7 +199,7 @@ const WordExplainDetail = () => {
                     Object.keys(comments)?.map((key, idx) => (
                         <div key={idx} className="ml-8 my-3 pb-2 border-b-2">                                    
                             <p>{comments[key]?.mean}</p>
-                            <p className='flex justify-between'>
+                            <div className='flex justify-between'>
                                 <div className='inline-flex items-center mt-1'>
                                     <span className='mr-3 inline-flex items-center'>
                                         <AiOutlineLike className='mr-1 text-blue-500'/> {comments[key]?.like}
@@ -211,7 +211,7 @@ const WordExplainDetail = () => {
                                 <div>
                                     <p>{comments[key]?.username}</p>
                                 </div>
-                            </p>
+                            </div>
                         </div>
                     ))
                     ) : (
