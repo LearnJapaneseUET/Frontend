@@ -55,55 +55,57 @@ const ListView = ({ words, listId, fetchWord }) => {
             {/* Hiển thị form CreateWord nếu showCreateForm là true */}
             {showCreateForm && <CreateWord fetchWord={fetchWord} setShowCreateForm={setShowCreateForm}/>}
 
+            <div className='h-[75svh] w-full rounded-xl p-3 custom-scroll-bar-0 overflow-y-auto'>
             {/* Danh sách từ */}
-            {words && words.length > 0 && (
-                <div className="list_detail">
-                    {words?.map((word, index) => (
-                        <div key={index} className='flex items-center'>
-                            {editIndex === index ? (
-                                <div className='flex w-full items-center px-2'>
-                                    <div className='flex w-full items-center'>
-                                        <h3 className='w-[15svh] text-[#7695FF] pl-1'>{word?.w}</h3>
-                                        <input 
-                                            type='text' 
-                                            value={editFurigana} 
-                                            onChange={(e) => setEditFurigana(e.target.value)} 
-                                            className='border px-2 py-1 rounded w-[16svh] ml-2'
-                                        />
-                                        <p className='w-[15svh] mr-4 text-[#F4538A]'>{word?.h}</p>
-                                        <input 
-                                            type='text' 
-                                            value={editMeaning} 
-                                            onChange={(e) => setEditMeaning(e.target.value)} 
-                                            className='border px-2 py-1 rounded w-[50svh]'
-                                        />
-                                        <button 
-                                            onClick={saveEdit} 
-                                            className='ml-3 bg-blue-500 text-white px-2 py-1 rounded'
-                                        >
-                                            Save
-                                        </button>
+                {words && words.length > 0 && (
+                    <div className="list_detail">
+                        {words?.map((word, index) => (
+                            <div key={index} className='flex items-center'>
+                                {editIndex === index ? (
+                                    <div className='flex w-full items-center px-2'>
+                                        <div className='flex w-full items-center'>
+                                            <h3 className='w-[15svh] text-[#7695FF] pl-1'>{word?.w}</h3>
+                                            <input 
+                                                type='text' 
+                                                value={editFurigana} 
+                                                onChange={(e) => setEditFurigana(e.target.value)} 
+                                                className='border px-2 py-1 rounded w-[16svh] ml-2'
+                                            />
+                                            <p className='w-[15svh] mr-4 text-[#F4538A]'>{word?.h}</p>
+                                            <input 
+                                                type='text' 
+                                                value={editMeaning} 
+                                                onChange={(e) => setEditMeaning(e.target.value)} 
+                                                className='border px-2 py-1 rounded w-[50svh]'
+                                            />
+                                            <button 
+                                                onClick={saveEdit} 
+                                                className='ml-3 bg-blue-500 text-white px-2 py-1 rounded'
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <div className='flex w-full items-center rounded-xl hover:bg-gray-200 hover:font-semibold px-2'>
-                                    <div className='flex-grow'>
-                                        <WordItem word={word} className='flex flex-row p-1 text-justify'/>
+                                ) : (
+                                    <div className='flex w-full items-center rounded-xl hover:bg-gray-200 hover:font-semibold px-2'>
+                                        <div className='flex-grow'>
+                                            <WordItem word={word} className='flex flex-row p-1 text-justify'/>
+                                        </div>
+                                        <CiEdit 
+                                            onClick={() => handleEdit(index)} 
+                                            className='ml-2 text-yellow-600 cursor-pointer text-2xl'
+                                        />
+                                        <TbHttpDelete 
+                                            onClick={() => handleDelete(word.id)} 
+                                            className='ml-2 text-red-500 cursor-pointer text-2xl'
+                                        />
                                     </div>
-                                    <CiEdit 
-                                        onClick={() => handleEdit(index)} 
-                                        className='ml-2 text-yellow-600 cursor-pointer text-2xl'
-                                    />
-                                    <TbHttpDelete 
-                                        onClick={() => handleDelete(word.id)} 
-                                        className='ml-2 text-red-500 cursor-pointer text-2xl'
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            )}
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
