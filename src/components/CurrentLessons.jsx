@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import fetchList from '../services/fetchList';
+import fetchAllLists from '../services/fetchAllLists';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ const CurrentLessons = () => {
         const fetchLessons = async () => {
             try {
                 // Lấy toàn bộ danh sách từ API
-                const listData = await fetchList();
+                const listData = await fetchAllLists();
                 
                 console.log("listData:", listData)
                 console.log("storedEntries", storedEntries)

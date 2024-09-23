@@ -4,7 +4,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import postNewList from '../services/postNewList';
 import deleteList from '../services/deleteList';
-import fetchList from '../services/fetchList';
+import fetchAllLists from '../services/fetchAllLists';
 
 const Lists = () => {
     const [lists, setList] = useState([]);
@@ -20,7 +20,7 @@ const Lists = () => {
 
     const getList = async () => {
         try {
-            const data = await fetchList();
+            const data = await fetchAllLists();
             setList(data);
         } catch (err) {
             setError('Có lỗi xảy ra khi tải danh sách.');
