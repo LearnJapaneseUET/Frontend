@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const fetchList = async () => {
+const fetchAllLists = async () => {
     try {
         const response = await axios.get(`${import.meta.env.REACT_APP_BACKEND_URL}/api/flashcard/all/`);
         return response.data;
@@ -10,4 +10,4 @@ const fetchList = async () => {
     }
 };
 
-export default fetchList;
+export default fetchAllLists;

@@ -4,9 +4,11 @@ import ListView from '../components/ListView';
 import AnimationCard from '../components/AnimationCard';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
+import { BiExport } from "react-icons/bi";
 import updateListName from '../services/updateListName';
 import fetchWordList from '../services/fetchWordList';
 import logAccessTime from '../utils/logAccessTime';
+import fetchExportDataFile from '../services/fetchExportDataFile';
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -37,6 +39,22 @@ const ListPage = () => {
         setIsEditing(false);
     };
 
+    // Hàm export file txt
+    const handleExport = async () => {
+        try {
+            const exportData = await fetchExportDataFile(listId);
+            const blob = new Blob([exportData], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${listName || 'export'}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url); // Giải phóng URL sau khi tải xuống
+        } catch (error) {
+            console.error("Lỗi khi export file: ", error);
+        }
+    };
+
     return (
         <div>
             <div className='flex justify-between mx-10'>
@@ -46,7 +64,11 @@ const ListPage = () => {
                             <h1 className='font-semibold text-2xl'>{listName}</h1> 
                             <CiEdit 
                                 onClick={() => setIsEditing(!isEditing)} 
-                                className='ml-2 text-yellow-600 cursor-pointer text-2xl'
+                                className='mx-2 text-yellow-600 cursor-pointer text-3xl hover:text-yellow-700 '
+                            />
+                            <BiExport 
+                                className='text-dark-green hover:text-green-700 cursor-pointer text-3xl' 
+                                onClick={handleExport} // Gọi hàm export khi click
                             />
                         </div>
                     :
