@@ -45,6 +45,7 @@ const Chatbot = () => {
 
       // Use Azure TTS to play bot's message
       const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
+      synthesizer.speechSynthesisVoiceName = 'ja-JP-Ayumi-Apollo';
       synthesizer.speakTextAsync(botMessage.text);
     } catch (error) {
       console.error(error);
